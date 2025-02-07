@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/main-header.css">
+  <link rel="stylesheet" href="/static/css/cart-checkout.css">
+  <link rel="stylesheet" href="/static/css/footer.css">
+</head>
+<body>
+
+<header class="main-header">
+  <div class="container d-flex justify-content-between align-items-center py-3">
+    <div class="search-bar d-flex align-items-center">
+      <input type="text" placeholder="Search..." class="form-control">
+      <i class="bi bi-search search-icon"></i>
+
+      <a href="/promotions" class="nav-item promotions-link">
+        <img src="/static/image/discount-icon.png" alt="Promotions">
+        <span>Промоции</span>
+      </a>
+
+    </div>
+
+    <a href="/" class="logo">
+      <img src="/static/image/company-logo2.png" alt="Company Logo">
+    </a>
+
+    <nav class="nav-links d-flex align-items-center">
+
+      <a href="/login" class="nav-item login-link">
+        <img src="/static/image/user-icon1.png" alt="Login">
+        <span>Вход Регистрация</span>
+      </a>
+      <a href="/favorites" class="nav-item favorites-link">
+        <img src="/static/image/favorite-icon.png" alt="Favorites">
+        <span class="badge bg-success">0</span>
+      </a>
+      <a href="/cart" class="nav-item cart-link">
+        <img src="/static/image/cart-icon.png" alt="Cart">
+        <span class="badge bg-success">0</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- Sub-header -->
+
+<header class="sub-header">
+  <div class="sub-header-left">
+    <a href="/consultation" class="chat-link">
+      <div class="chat-icon">
+        <i class="bi bi-chat-right-dots"></i>
+      </div>
+      <span>Онлайн консултация с фармацевт</span>
+    </a>
+  </div>
+  <div class="sub-header-center">
+    <img src="/static/image/company-text-logo.png" alt="Sub Logo">
+  </div>
+  <div class="sub-header-right">
+    <a href="/pharmacies" class="location-link">
+      <div class="truck-icon">
+        <i class="bi bi-truck"></i>
+      </div>
+      <span>Безплатна доставка над <span class="price">49.99лв.</span></span>
+    </a>
+  </div>
+</header>
+
+<!-- Categories Header -->
+
+<nav class="category-header">
+  <ul class="category-menu">
+    <li class="category-item">
+      <a href="#" class="category-link">Category 1</a>
+      <ul class="subcategory-menu">
+        <li><a href="/category1/sub1">Subcategory 1</a></li>
+        <li><a href="/category1/sub2">Subcategory 2</a></li>
+        <li><a href="/category1/sub3">Subcategory 3</a></li>
+      </ul>
+    </li>
+    <li class="category-item">
+      <a href="#" class="category-link">Category 2</a>
+      <ul class="subcategory-menu">
+        <li><a href="/category2/sub1">Subcategory 1</a></li>
+        <li><a href="/category2/sub2">Subcategory 2</a></li>
+      </ul>
+    </li>
+    <li class="category-item">
+      <a href="#" class="category-link">Category 3</a>
+      <ul class="subcategory-menu">
+        <li><a href="/category3/sub1">Subcategory 1</a></li>
+        <li><a href="/category3/sub2">Subcategory 2</a></li>
+      </ul>
+    </li>
+    <li class="category-item">
+      <a href="#" class="category-link">Category 1</a>
+      <ul class="subcategory-menu">
+        <li><a href="/category1/sub1">Subcategory 1</a></li>
+        <li><a href="/category1/sub2">Subcategory 2</a></li>
+        <li><a href="/category1/sub3">Subcategory 3</a></li>
+      </ul>
+    </li>
+    <li class="category-item">
+      <a href="#" class="category-link">Category 1</a>
+      <ul class="subcategory-menu">
+        <li><a href="/category1/sub1">Subcategory 1</a></li>
+        <li><a href="/category1/sub2">Subcategory 2</a></li>
+        <li><a href="/category1/sub3">Subcategory 3</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+<div class="container my-5">
+  <div class="row mb-4">
+    <!-- Steps -->
+    <div class="col text-center">
+      <span class="step active">1. Информация за доставка</span>
+      <span class="step">2. Финализиране</span>
+    </div>
+
+    <hr class="divider">
+
+  </div>
+  <div class="row">
+    <!-- Left Section: Delivery Form -->
+    <div class="col-md-8">
+      <h3 class="mb-4">Информация за доставката</h3>
+      <form>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="firstName" class="form-label">Име</label>
+            <input type="text" class="form-control" id="firstName" placeholder="Вашето име">
+          </div>
+          <div class="col">
+            <label for="lastName" class="form-label">Фамилия</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Вашата фамилия">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="city" class="form-label">Град</label>
+            <select class="form-select" id="city">
+              <option selected>Изберете град</option>
+              <option value="1">София</option>
+              <option value="2">Пловдив</option>
+              <option value="3">Варна</option>
+            </select>
+          </div>
+          <div class="col">
+            <label for="postalCode" class="form-label">Пощенски код</label>
+            <input type="text" class="form-control" id="postalCode" placeholder="1234">
+          </div>
+        </div>
+        <div class="mb-3">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="deliveryType" id="toAddress" value="address" checked>
+            <label class="form-check-label" for="toAddress">До адрес</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="deliveryType" id="toOffice" value="office">
+            <label class="form-check-label" for="toOffice">До офис или автомат</label>
+          </div>
+        </div>
+        <div id="addressFields">
+          <div class="row mb-3">
+            <div class="col">
+              <label for="street" class="form-label">Улица</label>
+              <input type="text" class="form-control" id="street" placeholder="Вашата улица">
+            </div>
+            <div class="col">
+              <label for="streetNumber" class="form-label">Номер</label>
+              <input type="text" class="form-control" id="streetNumber" placeholder="123">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <label for="floor" class="form-label">Етаж</label>
+              <input type="text" class="form-control" id="floor" placeholder="3">
+            </div>
+            <div class="col">
+              <label for="apartment" class="form-label">Апартамент</label>
+              <input type="text" class="form-control" id="apartment" placeholder="12">
+            </div>
+          </div>
+        </div>
+        <div id="officeField" class="mb-3" style="display: none;">
+          <label for="officeAddress" class="form-label">Адрес на офис</label>
+          <input type="text" class="form-control" id="officeAddress" placeholder="Въведете адрес на офис">
+        </div>
+        <div class="mb-3">
+          <label for="notes" class="form-label">Забележка</label>
+          <textarea class="form-control" id="notes" rows="3" placeholder="Вашите бележки"></textarea>
+        </div>
+        <h4 class="pay-method-title mb-3">Начин на плащане</h4>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="radio" name="paymentMethod" id="cod" value="cash" checked>
+          <label class="form-check-label" for="cod">Плащане при доставка</label>
+        </div>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="radio" name="paymentMethod" id="card" value="card">
+          <label class="form-check-label" for="card">Кредитна/Дебитна карта</label>
+        </div>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="radio" name="paymentMethod" id="bank" value="bank">
+          <label class="form-check-label" for="bank">Банков трансфер</label>
+        </div>
+        <button type="submit" class="apply-btn btn btn-primary">Продължи</button>
+      </form>
+    </div>
+    <!-- Right Section: Order Summary -->
+    <div class="right-section col-md-4">
+      <h3 class="mb-4">Преглед на поръчката  <span class="count">2 продукта</span></h3>
+      <hr class="divider">
+      <div class="product-review mb-3">
+        <div class="d-flex align-items-center">
+          <img src="/static/image/products/voltaren_forte.png" alt="product image" class="me-3">
+          <div>
+            <p class="mb-0">Продукт 1</p>
+            <small>Брой: <span class="num">1</span> </small>
+            <p class="mb-0">Цена: <span class="num">20.00лв</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="product-review mb-3">
+        <div class="d-flex align-items-center">
+          <img src="/static/image/products/doppelherz-imuno-kids.png" alt="product image" class="me-3">
+          <div>
+            <p class="mb-0">Продукт 2</p>
+            <small>Брой: <span class="num">1</span> </small>
+            <p class="mb-0">Цена: <span class="num">30.00лв</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+
+
+
+  <div class="footer-wrapper">
+
+    <div class="footer">
+      <!-- Left Section -->
+
+
+      <!-- Right Section -->
+
+      <div class="first-section">
+        <h1>Аптека</h1>
+        <ul class="links">
+          <li><a href="#">Общи условия</a></li>
+          <li><a href="#">За нас</a></li>
+          <li><a href="#">Условия за доставка</a></li>
+        </ul>
+        <!--        <div class="footer-bottom">-->
+        <!--          <p>Всички права запазени</p>-->
+        <!--        </div>-->
+      </div>
+
+      <div style="border-left: 1px solid #6a1b9a; height: 100px; margin: 0 5px -20px;"></div>
+
+      <div class="right-section">
+        <h1>Контакти</h1>
+        <ul class="links">
+          <li><a href="#"><i class="fas fa-map-marker-alt"></i> Намери най-близката аптека</a></li>
+          <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+          <li><a href="#"><i class="fas fa-envelope"></i> Email</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Logo Section -->
+    <div class="logo-container">
+      <div class="logo">
+        <img src="/static/image/company-logo2.png" alt="Company Logo" Logo">
+      </div>
+      <div class="logo1">
+        <img src="/static/image/company-text-logo.png" alt="Company Name" Logo">
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+<script>
+  const toAddress = document.getElementById('toAddress');
+  const toOffice = document.getElementById('toOffice');
+  const addressFields = document.getElementById('addressFields');
+  const officeField = document.getElementById('officeField');
+
+  toAddress.addEventListener('change', () => {
+    addressFields.style.display = 'block';
+    officeField.style.display = 'none';
+  });
+
+  toOffice.addEventListener('change', () => {
+    addressFields.style.display = 'none';
+    officeField.style.display = 'block';
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

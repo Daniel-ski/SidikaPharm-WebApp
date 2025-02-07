@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Title</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" th:href="@{/css/cart.css}">
+    <link rel="stylesheet" th:href="@{/css/main-header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+</head>
+
+<body>
+<!-- Main Header -->
+<header th:replace="fragments/header :: main-header"></header>
+
+<!-- Sub-header -->
+<header th:replace="fragments/header :: sub-header"></header>
+
+<!-- Categories Header -->
+<nav th:replace="fragments/header :: category-header"></nav>
+
+
+<div class="cart-container">
+    <h1 class="cart-title">Вашата количка</h1>
+
+    <div class="cart-content">
+        <!-- Лява секция: Таблица с продуктите -->
+        <div class="cart-table">
+            <div class="cart-header">
+                <span>Име</span>
+                <span>Ед. цена</span>
+                <span>Брой</span>
+                <span>Сума</span>
+            </div>
+            <hr class="divider">
+            <div class="cart-item">
+                <a href="/product-details" class="product-card-link">
+                    <img src="/images/products/doppelherz-imuno-kids.png" alt="Product Image">
+
+                    <div class="item-details">
+                    <p class="item-name">Продукт 1</p>
+                    </a>
+                </div>
+
+                <p class="item-price">
+                    <span class="old-price">50.00 лв.</span><br>
+                    <span class="new-price">45.00 лв.</span>
+                </p>
+
+                <div class="item-quantity-control">
+                    <button class="quantity-btn minus-btn">-</button>
+                    <input value="1" class="item-quantity" readonly>
+                    <button class="quantity-btn plus-btn">+</button>
+                </div>
+                <p class="item-sum">45.00 лв.</p>
+                <button class="remove-item-btn bi-trash3"></button>
+
+
+
+
+<!--                <input type="number" value="1" class="item-quantity">-->
+<!--                <p class="item-sum">45.00 лв.</p>-->
+<!--                <button class="remove-item-btn">🗑️</button>-->
+            </div>
+
+            <hr class="divider">
+            <button class="continue-shopping-btn" onclick="window.location.href='/'">Продължи с пазаруването</button>
+        </div>
+
+        <!-- Дясна секция: Преглед -->
+        <div class="cart-summary">
+            <h2>Преглед</h2>
+            <hr class="divider">
+            <div class="free-delivery">
+                <img src="/images/promo-icon.png" alt="Promo Icon">
+                <p>Добави продукти за още <span>25.00 лв.</span> и вземи безплатна доставка</p>
+            </div>
+            <hr class="divider">
+            <div class="summary-details">
+                <p>Междинна сума: <span> 45.00 лв.</span></p>
+                <p>Доставка: <span>5.00 лв.</span></p>
+                <hr class="divider">
+                <div class="total-sum">
+                <p>Обща сума: <span>50.00 лв.</span></p>
+                </div>
+                <hr class="divider">
+                <div class="saved-money">
+                <p>Спестяваш: <span>5.00 лв.</span></p>
+                </div>
+                <p class="vat-note">*Всички цени са с включено ДДС</p>
+            </div>
+            <button class="checkout-btn" onclick="window.location.href='/user/cart-checkout'">Към завършване</button>
+        </div>
+    </div>
+
+    <!-- Купи още секция -->
+    <h2 class="recommend-title">Купи още</h2>
+    <div class="carousel-container">
+        <button class="carousel-arrow left-arrow">←</button>
+        <div class="carousel">
+
+
+            <div class="product-card">
+                <a href="/product-details" class="product-card-link">
+                <div class="discount">-15%</div>
+                <img src="/images/products/doppelherz-imuno-kids.png" alt="Product 2">
+                <div class="product-name">Product Name 2</div>
+                <div class="prices">
+                    <span class="old-price">70.00лв</span>
+                    <span class="new-price">59.50лв</span>
+                </div>
+                <div class="buttons">
+                    <button class="order">
+                        <i class="bi bi-cart"></i> Поръчай
+                    </button>
+                    <button class="wishlist">
+                        <i class="bi bi-heart"></i>
+                    </button>
+                </div>
+                </a>
+            </div>
+
+
+            <div class="product-card">
+                <a href="/product-details" class="product-card-link">
+                    <div class="discount">-15%</div>
+                    <img src="/images/products/doppelherz-imuno-kids.png" alt="Product 2">
+                    <div class="product-name">Product Name 2</div>
+                    <div class="prices">
+                        <span class="old-price">70.00лв</span>
+                        <span class="new-price">59.50лв</span>
+                    </div>
+                    <div class="buttons">
+                        <button class="order">
+                            <i class="bi bi-cart"></i> Поръчай
+                        </button>
+                        <button class="wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+                </a>
+            </div>
+
+            <div class="product-card">
+                <a href="/product-details" class="product-card-link">
+                    <div class="discount">-15%</div>
+                    <img src="/images/products/doppelherz-imuno-kids.png" alt="Product 2">
+                    <div class="product-name">Product Name 2</div>
+                    <div class="prices">
+                        <span class="old-price">70.00лв</span>
+                        <span class="new-price">59.50лв</span>
+                    </div>
+                    <div class="buttons">
+                        <button class="order">
+                            <i class="bi bi-cart"></i> Поръчай
+                        </button>
+                        <button class="wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+                </a>
+            </div>
+
+            <div class="product-card">
+                <a href="/product-details" class="product-card-link">
+                    <div class="discount">-15%</div>
+                    <img src="/images/products/doppelherz-imuno-kids.png" alt="Product 2">
+                    <div class="product-name">Product Name 2</div>
+                    <div class="prices">
+                        <span class="old-price">70.00лв</span>
+                        <span class="new-price">59.50лв</span>
+                    </div>
+                    <div class="buttons">
+                        <button class="order">
+                            <i class="bi bi-cart"></i> Поръчай
+                        </button>
+                        <button class="wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+                </a>
+            </div>
+
+            <div class="product-card">
+                <a href="/product-details" class="product-card-link">
+                    <div class="discount">-15%</div>
+                    <img src="/images/products/doppelherz-imuno-kids.png" alt="Product 2">
+                    <div class="product-name">Product Name 2</div>
+                    <div class="prices">
+                        <span class="old-price">70.00лв</span>
+                        <span class="new-price">59.50лв</span>
+                    </div>
+                    <div class="buttons">
+                        <button class="order">
+                            <i class="bi bi-cart"></i> Поръчай
+                        </button>
+                        <button class="wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+                </a>
+            </div>
+
+            <div class="product-card">Продукт 3</div>
+            <div class="product-card">Продукт 4</div>
+        </div>
+        <button class="carousel-arrow right-arrow">→</button>
+    </div>
+</div>
+
+<footer>
+
+
+
+    <div class="footer-wrapper">
+
+        <div class="footer">
+            <!-- Left Section -->
+
+
+            <!-- Right Section -->
+
+            <div class="first-section">
+                <h1>Аптека</h1>
+                <ul class="links">
+                    <li><a href="#">Общи условия</a></li>
+                    <li><a href="#">За нас</a></li>
+                    <li><a href="#">Условия за доставка</a></li>
+                </ul>
+                <!--        <div class="footer-bottom">-->
+                <!--          <p>Всички права запазени</p>-->
+                <!--        </div>-->
+            </div>
+
+            <div style="border-left: 1px solid #6a1b9a; height: 100px; margin: 0 5px -20px;"></div>
+
+            <div class="right-section">
+                <h1>Контакти</h1>
+                <ul class="links">
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Намери най-близката аптека</a></li>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Email</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Logo Section -->
+        <div class="logo-container">
+            <div class="logo">
+                <img src="/images/company-logo2.png" alt="Company Logo" Logo">
+            </div>
+            <div class="logo1">
+                <img src="/images/company-text-logo.png" alt="Company Name" Logo">
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Homepage</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/main-header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+</head>
+<body>
+
+<!-- Main Header -->
+<header th:replace="fragments/header :: main-header"></header>
+
+<!-- Sub-header -->
+<header th:replace="fragments/header :: sub-header"></header>
+
+<!-- Categories Header -->
+<nav th:replace="fragments/header :: category-header"></nav>
+
+
+
+
+
+<!--<div class="categories-header">-->
+<!--    <div class="container d-flex justify-content-around">-->
+<!--        <div class="category-item">Category 1</div>-->
+<!--        <div class="category-item">Category 2</div>-->
+<!--        <div class="category-item">Category 3</div>-->
+<!--        <div class="category-item">Category 4</div>-->
+<!--        <div class="category-item">Category 5</div>-->
+<!--        <div class="category-item">Category 6</div>-->
+<!--        <div class="category-item">Category 7</div>-->
+<!--        <div class="category-item">Category 8</div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!-- Promotions Slider -->
+
+<div id="promoCarousel" class="carousel slide" data-bs-ride="carousel">
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#promoCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
+        <button type="button" data-bs-target="#promoCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#promoCarousel" data-bs-slide-to="2"></button>
+    </div>
+
+    <!-- Slides -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="/images/products/mainProm/Eucerin.jpg" class="d-block w-100" alt="Promo 1">
+        </div>
+        <div class="carousel-item">
+            <img src="/images/products/mainProm/Derma_Month.jpg" class="d-block w-100" alt="Promo 2">
+        </div>
+        <div class="carousel-item">
+            <img src="/images/company-logo.png" class="d-block w-100" alt="Promo 3">
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#promoCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#promoCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
+
+
+
+<!--<div class="promotions-slider">-->
+<!--    <div class="container position-relative">-->
+<!--        <div class="promotion-item">Promotion 1</div>-->
+<!--        <img src="/image/company-logo.png">-->
+<!--        <div class="promotion-item">Promotion 2-->
+<!--            <img src="/image/company-logo.png">-->
+<!--        </div>-->
+
+<!--        <div class="promotion-item">Promotion 3</div>-->
+<!--        <button class="slider-prev">&#9664;</button>-->
+<!--        <button class="slider-next">&#9654;</button>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!-- Featured Products -->
+
+
+<div class="container">
+    <!-- Promotional Products Section -->
+    <section class="product-section">
+        <h2>Промоционални продукти</h2>
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            <!-- Product Card -->
+            <div class="col">
+                <div class="product-card">
+                    <a href="/product-details" class="product-card-link">
+                    <div class="discount">-20%</div>
+                    <img src="/images/products/doppelherz-imuno-kids.png" alt="Product 1">
+                    <div class="product-name">Product Name 1</div>
+                    <div class="prices">
+                        <span class="old-price">50.00лв</span>
+                        <span class="new-price">40.00лв</span>
+                    </div>
+                    <div class="buttons">
+                        <button class="order">
+                            <i class="bi bi-cart"></i> Поръчай
+                        </button>
+                        <button class="wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Repeat Product Cards for 4 items -->
+            <div class="col">
+                <div class="product-card">
+                    <a href="/product-details" class="product-card-link">
+                    <div class="discount">-15%</div>
+                    <img src="/images/products/voltaren_forte.png" alt="Product 2">
+                    <div class="product-name">Product Name 2</div>
+                    <div class="prices">
+                        <span class="old-price">70.00лв</span>
+                        <span class="new-price">59.50лв</span>
+                    </div>
+                    <div class="buttons">
+                        <button class="order">
+                            <i class="bi bi-cart"></i> Поръчай
+                        </button>
+                        <button class="wishlist">
+                            <i class="bi bi-heart heart-icon"></i>
+                        </button>
+                    </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Repeat for other products as needed -->
+            <div class="col">
+                <div class="product-card">
+                    <a href="/product-details" class="product-card-link">
+                    <div class="discount">-15%</div>
+                    <img src="/images/products/doppelherz-imuno-kids.png" alt="Product 2">
+                    <div class="product-name">Product Name 2</div>
+                    <div class="prices">
+                        <span class="old-price">70.00лв</span>
+                        <span class="new-price">59.50лв</span>
+                    </div>
+                    <div class="buttons">
+                        <button class="order">
+                            <i class="bi bi-cart"></i> Поръчай
+                        </button>
+                        <button class="wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="product-card">
+                    <a href="/product-details" class="product-card-link">
+                    <div class="discount">-15%</div>
+                    <img src="/images/products/voltaren_forte.png" alt="Product 2">
+                    <div class="product-name">Product Name 2</div>
+                    <div class="prices">
+                        <span class="old-price">70.00лв</span>
+                        <span class="new-price">59.50лв</span>
+                    </div>
+                    <div class="buttons">
+                        <button class="order">
+                            <i class="bi bi-cart"></i> Поръчай
+                        </button>
+                        <button class="wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Products Section -->
+    <section class="product-section">
+        <h2>Най-нови продукти</h2>
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            <!-- Repeat same structure as Promotional Products -->
+            <!-- Example Product Card -->
+            <div class="col">
+                <div class="product-card">
+                    <a href="/product-details" class="product-card-link">
+<!--                    <div class="discount">-10%</div>-->
+                    <img src="/images/products/doppelherz-imuno-kids.png" alt="Product 3">
+                    <div class="product-name">Product Name 3</div>
+                    <div class="prices">
+<!--                        <span class="old-price">30.00лв</span>-->
+                        <span class="new-price">27.00лв</span>
+                    </div>
+                    <div class="buttons">
+                        <button class="order">
+                            <i class="bi bi-cart"></i> Поръчай
+                        </button>
+                        <button class="wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Repeat for additional products -->
+            <div class="col">
+                <div class="product-card">
+                    <a href="/product-details" class="product-card-link">
+                    <div class="discount">-10%</div>
+                    <img src="/images/product3.jpg" alt="Product 3">
+                    <div class="product-name">Product Name 3</div>
+                    <div class="prices">
+                        <span class="old-price">30.00лв</span>
+                        <span class="new-price">27.00лв</span>
+                    </div>
+                    <div class="buttons">
+                        <button class="order">
+                            <i class="bi bi-cart"></i> Поръчай
+                        </button>
+                        <button class="wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="product-card">
+                    <a href="/product-details" class="product-card-link">
+                    <div class="discount">-10%</div>
+                    <img src="/images/product3.jpg" alt="Product 3">
+                    <div class="product-name">Product Name 3</div>
+                    <div class="prices">
+                        <span class="old-price">30.00лв</span>
+                        <span class="new-price">27.00лв</span>
+                    </div>
+                    <div class="buttons">
+                        <button class="order">
+                            <i class="bi bi-cart"></i> Поръчай
+                        </button>
+                        <button class="wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="product-card">
+                    <a href="/product-details" class="product-card-link">
+                    <div class="discount">-10%</div>
+                    <img src="/images/product3.jpg" alt="Product 3">
+                    <div class="product-name">Product Name 3</div>
+                    <div class="prices">
+                        <span class="old-price">30.00лв</span>
+                        <span class="new-price">27.00лв</span>
+                    </div>
+                    <div class="buttons">
+                        <button class="order">
+                            <i class="bi bi-cart"></i> Поръчай
+                        </button>
+                        <button class="wishlist">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+
+
+
+
+
+<!--<div class="featured-products">-->
+<!--    <div class="container d-flex justify-content-between">-->
+<!--        <div class="product-item">-->
+<!--            <div class="discount">-20%</div>-->
+<!--            <img src="/image/company-logo2.png" alt="Product 1">-->
+<!--            <h3>Product Name</h3>-->
+<!--            <p><s>Old Price</s> <span class="new-price">New Price</span></p>-->
+<!--            <button class="btn btn-success">Поръчай <i class="bi bi-cart"></i></button>-->
+<!--            <i class="bi bi-heart favorite-icon"></i>-->
+<!--        </div>-->
+<!--        <div class="discount">-20%</div>-->
+<!--        <img src="/image/company-logo2.png" alt="Product 1">-->
+<!--        <h3>Product Name</h3>-->
+<!--        <p><s>Old Price</s> <span class="new-price">New Price</span></p>-->
+<!--        <button class="btn btn-success">Поръчай <i class="bi bi-cart"></i></button>-->
+<!--        <i class="bi bi-heart favorite-icon"></i>-->
+<!--        &lt;!&ndash; Repeat for 3 more products &ndash;&gt;-->
+<!--    </div>-->
+<!--</div>-->
+
+<!-- News Section -->
+
+
+<section class="news-section">
+        <h2>Последни новини</h2>
+    <button class="all-news-btn">виж всички новини</button>
+    <div class="news-container">
+        <div class="news-item">
+            <h3>В света на йога с Рали: да подобрим работата на вътрешните органи</h3>
+            <img src="/images/173582751961862.jpg.webp" alt="News Image">
+            <p>Храносмилането играе важна роля за цялостното състояние на тялото, а чревното здраве е един от основните фактори за силна имунна система и добро здраве. За съжаление, днешният забързан ритъм, някои не съвсем добри навици, стресът и заседналият начин на живот могат да нарушат здравето на храносмилателната ни система.</p>
+            <a href="/news-details" class="read-more">Прочети още</a>
+            <div class="date-badge">31.12.2024</div>
+            <div class="comments-section" onclick="openPopup()">
+                <i class="bi bi-chat"></i>
+                <span>5</span>
+            </div>
+        </div>
+        <div class="news-item">
+            <img src="/images/news2.jpg" alt="News Image">
+            <h3>Заглавие на новината</h3>
+            <p>Кратко описание на новината, което предоставя основна информация...</p>
+            <a href="/news-details" class="read-more">Прочети още</a>
+            <div class="date-badge">30.12.2024</div>
+            <div class="comments-section" onclick="openPopup()">
+                <i class="bi bi-chat"></i>
+                <span>2</span>
+            </div>
+        </div>
+        <div class="news-item">
+            <img src="/images/news3.jpg" alt="News Image">
+            <h3>Заглавие на новината</h3>
+            <p>Кратко описание на новината, което предоставя основна информация...</p>
+            <a href="/news-details" class="read-more">Прочети още</a>
+            <div class="date-badge">29.12.2024</div>
+            <div class="comments-section" onclick="openPopup()">
+                <i class="bi bi-chat"></i>
+                <span>0</span>
+            </div>
+        </div>
+    </div>
+    <button id="load-more" class="load-more-btn">Покажи още</button>
+</section>
+
+
+
+
+<!--<div id="comments-popup" class="popup">-->
+<!--    <div class="popup-content">-->
+<!--        <button class="close-btn" onclick="closePopup()">×</button>-->
+<!--        <h2>Коментари</h2>-->
+<!--        <div class="comments-section">-->
+<!--            &lt;!&ndash; Thymeleaf: Преглед на всички коментари &ndash;&gt;-->
+<!--            <ul>-->
+<!--                <li th:each="comment : ${comments}">-->
+<!--                    <p><strong th:text="${comment.username}">User Name</strong></p>-->
+<!--                    <p th:text="${comment.text}">Коментар...</p>-->
+<!--                    <p class="comment-date" th:text="${#dates.format(comment.date, 'dd.MM.yyyy HH:mm')}">-->
+<!--                        01.01.2024 12:00-->
+<!--                    </p>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Поле за нов коментар &ndash;&gt;-->
+<!--        <div class="new-comment">-->
+<!--            <textarea id="new-comment" placeholder="Добавете вашия коментар..."></textarea>-->
+<!--            <button onclick="submitComment()">Публикувай</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+
+
+
+
+
+
+
+
+<div id="comments-popup" class="comments-popup hidden">
+    <div class="popup-content">
+        <button class="close-btn" onclick="closePopup()">✖</button>
+        <h3>Коментари</h3>
+        <div id="comments-container">
+            <!-- Примерни коментари -->
+            <div class="comment" data-comment-id="1">
+                <p><strong>Иван :</strong> Това е най добрата статия която съм чел,продължавай все така да пишеш и ние да се наслаждаваме.</p>
+                <div class="comment-details">
+                    <span class="comment-date">31.12.2024, 14:35</span>
+                </div>
+            </div>
+            <div class="comment" data-comment-id="2">
+                <p><strong>Mariq : </strong> В йога се смята, че бедрата са мястото, където се съхраняват негативните емоции. Да, тялото ни натрупва и складира напрежението и стреса в определени области. Така че освобождаването им, макар да е нещо добро и полезно, може да бъде интензивно преживяване..</p>
+                <div class="comment-details">
+                    <span class="comment-date">31.12.2024, 14:35</span>
+                </div>
+            </div>
+        </div>
+        <div id="new-comment-container">
+            <textarea id="new-comment-text" placeholder="Напишете коментар..."></textarea>
+            <button class="submit-button" onclick="submitComment()">Изпрати</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!--<div id="comments-popup" class="comments-popup hidden">-->
+<!--    <div class="popup-content">-->
+<!--        <h3>Коментари</h3>-->
+<!--        <div id="comments-list">-->
+<!--            &lt;!&ndash; Ако няма коментари &ndash;&gt;-->
+<!--            <p class="no-comments">Все още няма налични коментари.</p>-->
+
+<!--            &lt;!&ndash; Пример за коментар с отговори &ndash;&gt;-->
+<!--            <div class="comment">-->
+<!--                <p><strong>Иван:</strong> Много интересна новина!</p>-->
+<!--                <div class="comment-details">-->
+<!--                    <span class="comment-date">31.12.2024, 14:35</span>-->
+<!--                    <span class="comment-replies" onclick="toggleReplies(1)">-->
+<!--                        <i class="bi bi-chat"></i> 2 отговора-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; Отговори на коментара &ndash;&gt;-->
+<!--                <div class="replies hidden" id="replies-1">-->
+<!--                    <div class="reply">-->
+<!--                        <p><strong>Мария:</strong> Благодаря за информацията!</p>-->
+<!--                        <span class="reply-date">31.12.2024, 15:00</span>-->
+<!--                    </div>-->
+<!--                    <div class="reply">-->
+<!--                        <p><strong>Петър:</strong> Съгласен съм с Иван.</p>-->
+<!--                        <span class="reply-date">31.12.2024, 15:30</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="comment">-->
+<!--                <p><strong>Иван:</strong> Много интересна новина!</p>-->
+<!--                <div class="comment-details">-->
+<!--                    <span class="comment-date">31.12.2024, 14:35</span>-->
+<!--                    <span class="comment-replies" onclick="toggleReplies(1)">-->
+<!--                        <i class="bi bi-chat"></i> 0 отговора-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        &lt;!&ndash; Поле за добавяне на коментар &ndash;&gt;-->
+<!--        <textarea placeholder="Добавете коментар..."></textarea>-->
+<!--        <button onclick="submitComment()">Изпрати</button>-->
+<!--        <button onclick="closeCommentsPopup()">Затвори</button>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+
+
+<!--<div id="comments-popup" class="comments-popup hidden">-->
+<!--    <div class="popup-content">-->
+<!--        <h3>Коментари</h3>-->
+<!--        <div id="comments-list">-->
+<!--            <div class="comment">-->
+<!--                <p><strong>Иван:</strong> Много интересна новина! Ще следя развитието.</p>-->
+<!--            </div>-->
+<!--            <div class="comment">-->
+<!--                <p><strong>Мария:</strong> Благодаря за информацията! Полезно е.</p>-->
+<!--            </div>-->
+<!--            <div class="comment">-->
+<!--                <p><strong>Петър:</strong> Имам въпрос, къде мога да намеря повече детайли?</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <textarea placeholder="Добавете коментар..."></textarea>-->
+<!--        <button onclick="submitComment()">Изпрати</button>-->
+<!--        <button onclick="closeCommentsPopup()">Затвори</button>-->
+<!--    </div>-->
+
+
+
+
+
+
+
+
+<!--<div class="news-section">-->
+<!--    <h2>НОВИНИ</h2>-->
+<!--    <div class="news-items">-->
+<!--        <div class="news-item">-->
+<!--            <h3>News Title</h3>-->
+<!--            <img src="/image/news1.png" alt="News 1">-->
+<!--            <span class="news-date">Дата</span>-->
+<!--            <p>Кратко описание</p>-->
+<!--            <button class="btn btn-link">Прочети още</button>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Repeat for more news items &ndash;&gt;-->
+<!--    </div>-->
+<!--    <button class="btn btn-primary">Прочети още</button>-->
+<!--</div>-->
+
+<!-- Footer -->
+<footer>
+
+
+
+    <div class="footer-wrapper">
+
+        <div class="footer">
+            <!-- Left Section -->
+
+
+            <!-- Right Section -->
+
+            <div class="first-section">
+                <h1>Аптека</h1>
+                <ul class="links">
+                    <li><a href="#">Общи условия</a></li>
+                    <li><a href="#">За нас</a></li>
+                    <li><a href="#">Условия за доставка</a></li>
+                </ul>
+                <!--        <div class="footer-bottom">-->
+                <!--          <p>Всички права запазени</p>-->
+                <!--        </div>-->
+            </div>
+
+            <div style="border-left: 1px solid #6a1b9a; height: 100px; margin: 0 5px -20px;"></div>
+
+            <div class="right-section">
+                <h1>Контакти</h1>
+                <ul class="links">
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Намери най-близката аптека</a></li>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Email</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Logo Section -->
+        <div class="logo-container">
+            <div class="logo">
+                <img src="/images/company-logo2.png" alt="Company Logo">
+            </div>
+            <div class="logo1">
+                <img src="/images/company-text-logo.png" alt="Company Name">
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script th:src="@{/js/homepage.js}"></script>
+<script th:src="@{/js/news-popup.js}"></script>
+
+</body>
+</html>

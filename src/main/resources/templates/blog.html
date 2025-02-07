@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новини</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="/static/css/blog.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+
+</head>
+<body>
+
+<!-- Main Header -->
+<header class="main-header">
+    <div class="container d-flex justify-content-between align-items-center py-3">
+        <div class="search-bar d-flex align-items-center">
+            <input type="text" placeholder="Search..." class="form-control">
+            <i class="bi bi-search search-icon"></i>
+
+            <a href="/promotions" class="nav-item promotions-link">
+                <img src="/static/image/discount-icon.png" alt="Promotions">
+                <span>Промоции</span>
+            </a>
+
+        </div>
+
+        <a href="/" class="logo">
+            <img src="/static/image/company-logo2.png" alt="Company Logo">
+        </a>
+
+        <nav class="nav-links d-flex align-items-center">
+
+            <a href="/login" class="nav-item login-link">
+                <img src="/static/image/user-icon1.png" alt="Login">
+                <span>Вход Регистрация</span>
+            </a>
+            <a href="/favorites" class="nav-item favorites-link">
+                <img src="/static/image/favorite-icon.png" alt="Favorites">
+                <span class="badge bg-success">0</span>
+            </a>
+            <a href="/cart" class="nav-item cart-link">
+                <img src="/static/image/cart-icon.png" alt="Cart">
+                <span class="badge bg-success">0</span>
+            </a>
+        </nav>
+    </div>
+</header>
+
+<!-- Sub-header -->
+
+<header class="sub-header">
+    <div class="sub-header-left">
+        <a href="/consultation" class="chat-link">
+            <div class="chat-icon">
+                <i class="bi bi-chat-right-dots"></i>
+            </div>
+            <span>Онлайн консултация с фармацевт</span>
+        </a>
+    </div>
+    <div class="sub-header-center">
+        <img src="/static/image/company-text-logo.png" alt="Sub Logo">
+    </div>
+    <div class="sub-header-right">
+        <a href="/pharmacies" class="location-link">
+            <div class="truck-icon">
+            <i class="bi bi-truck"></i>
+            </div>
+            <span>Безплатна доставка над <span class="price">49.99лв.</span></span>
+        </a>
+    </div>
+</header>
+
+
+
+
+
+
+
+
+
+
+
+<!--<header class="sub-header">-->
+<!--    <div class="sub-header-left">-->
+<!--        <a href="/consultation" class="chat-link">-->
+<!--            <div class="chat-icon"></div>-->
+<!--            <span>Онлайн консултация с фармацевт</span>-->
+<!--        </a>-->
+<!--    </div>-->
+<!--    <img src="/static/image/company-text-logo.png" alt="Sub Logo">-->
+<!--    <div class="sub-header-right">-->
+<!--        <a href="/pharmacies" class="location-link">-->
+<!--            <div class="location-icon"></div>-->
+<!--            <span>Намерете аптеките ни</span>-->
+<!--        </a>-->
+<!--    </div>-->
+<!--</header>-->
+
+
+
+<!-- Categories Header -->
+
+<nav class="category-header">
+    <ul class="category-menu">
+        <li class="category-item">
+            <a href="#" class="category-link">Category 1</a>
+            <ul class="subcategory-menu">
+                <li><a href="/category1/sub1">Subcategory 1</a></li>
+                <li><a href="/category1/sub2">Subcategory 2</a></li>
+                <li><a href="/category1/sub3">Subcategory 3</a></li>
+            </ul>
+        </li>
+        <li class="category-item">
+            <a href="#" class="category-link">Category 2</a>
+            <ul class="subcategory-menu">
+                <li><a href="/category2/sub1">Subcategory 1</a></li>
+                <li><a href="/category2/sub2">Subcategory 2</a></li>
+            </ul>
+        </li>
+        <li class="category-item">
+            <a href="#" class="category-link">Category 3</a>
+            <ul class="subcategory-menu">
+                <li><a href="/category3/sub1">Subcategory 1</a></li>
+                <li><a href="/category3/sub2">Subcategory 2</a></li>
+            </ul>
+        </li>
+        <li class="category-item">
+            <a href="#" class="category-link">Category 1</a>
+            <ul class="subcategory-menu">
+                <li><a href="/category1/sub1">Subcategory 1</a></li>
+                <li><a href="/category1/sub2">Subcategory 2</a></li>
+                <li><a href="/category1/sub3">Subcategory 3</a></li>
+            </ul>
+        </li>
+        <li class="category-item">
+            <a href="#" class="category-link">Category 1</a>
+            <ul class="subcategory-menu">
+                <li><a href="/category1/sub1">Subcategory 1</a></li>
+                <li><a href="/category1/sub2">Subcategory 2</a></li>
+                <li><a href="/category1/sub3">Subcategory 3</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+
+<div class="news-header">
+    <h1>Блог</h1>
+    <div class="search-container">
+        <input type="text" placeholder="Търси новина..." class="search-input">
+        <button class="search-button">
+            <i class="bi bi-search search-icon"></i>
+        </button>
+    </div>
+</div>
+
+<main class="news-content">
+    <div class="news-grid">
+        <!-- Example News Article -->
+        <div class="news-item">
+            <div class="news-header">
+                <h2 class="news-title">Заглавие на статия</h2>
+                <div class="news-date">31.12.2024</div>
+            </div>
+            <img src="https://via.placeholder.com/300" alt="Article Image" class="news-image">
+            <p class="news-description">Тук е краткото описание на статията, което дава основна информация...</p>
+            <div class="news-actions">
+                <button class="read-more-btn" onclick="window.location.href='full-article.html'">Прочети още</button>
+                <button class="comments-btn" onclick="openPopup()">5 коментара</button>
+            </div>
+        </div>
+        <!-- Repeat news-item blocks for each article -->
+        <div class="news-item">
+            <div class="news-header">
+                <h2 class="news-title">Заглавие на статия</h2>
+                <div class="news-date">31.12.2024</div>
+            </div>
+            <img src="https://via.placeholder.com/300" alt="Article Image" class="news-image">
+            <p class="news-description">Тук е краткото описание на статията, което дава основна информация...</p>
+            <div class="news-actions">
+                <button class="read-more-btn" onclick="window.location.href='full-article.html'">Прочети още</button>
+                <button class="comments-btn" onclick="openPopup()">5 коментара</button>
+            </div>
+        </div>
+
+        <!-- Repeat news-item blocks for each article -->
+        <div class="news-item">
+            <div class="news-header">
+                <h2 class="news-title">Заглавие на статия</h2>
+                <div class="news-date">31.12.2024</div>
+            </div>
+            <img src="https://via.placeholder.com/300" alt="Article Image" class="news-image">
+            <p class="news-description">Тук е краткото описание на статията, което дава основна информация...</p>
+            <div class="news-actions">
+                <button class="read-more-btn" onclick="window.location.href='full-article.html'">Прочети още</button>
+                <button class="comments-btn" onclick="openCommentsPopup()">5 коментара</button>
+            </div>
+        </div>
+
+        <!-- Repeat news-item blocks for each article -->
+        <div class="news-item">
+            <div class="news-header">
+                <h2 class="news-title">Заглавие на статия</h2>
+                <div class="news-date">31.12.2024</div>
+            </div>
+            <img src="https://via.placeholder.com/300" alt="Article Image" class="news-image">
+            <p class="news-description">Тук е краткото описание на статията, което дава основна информация...</p>
+            <div class="news-actions">
+                <button class="read-more-btn" onclick="window.location.href='full-article.html'">Прочети още</button>
+                <button class="comments-btn" onclick="openCommentsPopup()">5 коментара</button>
+            </div>
+        </div>
+
+        <!-- Repeat news-item blocks for each article -->
+        <div class="news-item">
+            <div class="news-header">
+                <h2 class="news-title">Заглавие на статия</h2>
+                <div class="news-date">31.12.2024</div>
+            </div>
+            <img src="https://via.placeholder.com/300" alt="Article Image" class="news-image">
+            <p class="news-description">Тук е краткото описание на статията, което дава основна информация...</p>
+            <div class="news-actions">
+                <button class="read-more-btn" onclick="window.location.href='full-article.html'">Прочети още</button>
+                <button class="comments-btn" onclick="openCommentsPopup()">5 коментара</button>
+            </div>
+        </div>
+
+        <!-- Repeat news-item blocks for each article -->
+        <div class="news-item">
+            <div class="news-header">
+                <h2 class="news-title">Заглавие на статия</h2>
+                <div class="news-date">31.12.2024</div>
+            </div>
+            <img src="https://via.placeholder.com/300" alt="Article Image" class="news-image">
+            <p class="news-description">Тук е краткото описание на статията, което дава основна информация...</p>
+            <div class="news-actions">
+                <button class="read-more-btn" onclick="window.location.href='full-article.html'">Прочети още</button>
+                <button class="comments-btn" onclick="openCommentsPopup()">5 коментара</button>
+            </div>
+        </div>
+
+        <!-- Repeat news-item blocks for each article -->
+        <div class="news-item">
+            <div class="news-header">
+                <h2 class="news-title">Заглавие на статия</h2>
+                <div class="news-date">31.12.2024</div>
+            </div>
+            <img src="https://via.placeholder.com/300" alt="Article Image" class="news-image">
+            <p class="news-description">Тук е краткото описание на статията, което дава основна информация...</p>
+            <div class="news-actions">
+                <button class="read-more-btn" onclick="window.location.href='full-article.html'">Прочети още</button>
+                <button class="comments-btn" onclick="openCommentsPopup()">5 коментара</button>
+            </div>
+        </div>
+
+        <!-- Repeat news-item blocks for each article -->
+        <div class="news-item">
+            <div class="news-header">
+                <h2 class="news-title">Заглавие на статия</h2>
+                <div class="news-date">31.12.2024</div>
+            </div>
+            <img src="https://via.placeholder.com/300" alt="Article Image" class="news-image">
+            <p class="news-description">Тук е краткото описание на статията, което дава основна информация...</p>
+            <div class="news-actions">
+                <button class="read-more-btn" onclick="window.location.href='full-article.html'">Прочети още</button>
+                <button class="comments-btn" onclick="openCommentsPopup()">5 коментара</button>
+            </div>
+        </div>
+
+        <!-- Repeat news-item blocks for each article -->
+        <div class="news-item">
+            <div class="news-header">
+                <h2 class="news-title">Заглавие на статия</h2>
+                <div class="news-date">31.12.2024</div>
+            </div>
+            <img src="https://via.placeholder.com/300" alt="Article Image" class="news-image">
+            <p class="news-description">Тук е краткото описание на статията, което дава основна информация...</p>
+            <div class="news-actions">
+                <button class="read-more-btn" onclick="window.location.href='full-article.html'">Прочети още</button>
+                <button class="comments-btn" onclick="openPopup()">5 коментара</button>
+            </div>
+        </div>
+    </div>
+    <!-- Pagination -->
+    <div class="pagination">
+        <button class="page-btn">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn">›</button>
+    </div>
+</main>
+
+<!-- Comments Popup -->
+<div id="comments-popup" class="comments-popup hidden">
+    <div class="popup-content">
+        <button class="close-btn" onclick="closePopup()">✖</button>
+        <h3>Коментари</h3>
+        <div id="comments-container">
+            <!-- Примерни коментари -->
+            <div class="comment" data-comment-id="1">
+                <p><strong>Иван :</strong> Това е най добрата статия която съм чел,продължавай все така да пишеш и ние да се наслаждаваме.</p>
+                <div class="comment-details">
+                    <span class="comment-date">31.12.2024, 14:35</span>
+                </div>
+            </div>
+            <div class="comment" data-comment-id="2">
+                <p><strong>Mariq : </strong> В йога се смята, че бедрата са мястото, където се съхраняват негативните емоции. Да, тялото ни натрупва и складира напрежението и стреса в определени области. Така че освобождаването им, макар да е нещо добро и полезно, може да бъде интензивно преживяване..</p>
+                <div class="comment-details">
+                    <span class="comment-date">31.12.2024, 14:35</span>
+                </div>
+            </div>
+        </div>
+        <div id="new-comment-container">
+            <textarea id="new-comment-text" placeholder="Напишете коментар..."></textarea>
+            <button onclick="submitComment()">Изпрати</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+
+
+
+    <div class="footer-wrapper">
+
+        <div class="footer">
+            <!-- Left Section -->
+
+
+            <!-- Right Section -->
+
+            <div class="first-section">
+                <h1>Аптека</h1>
+                <ul class="links">
+                    <li><a href="#">Общи условия</a></li>
+                    <li><a href="#">За нас</a></li>
+                    <li><a href="#">Условия за доставка</a></li>
+                </ul>
+                <!--        <div class="footer-bottom">-->
+                <!--          <p>Всички права запазени</p>-->
+                <!--        </div>-->
+            </div>
+
+            <div style="border-left: 1px solid #6a1b9a; height: 100px; margin: 0 5px -20px;"></div>
+
+            <div class="right-section">
+                <h1>Контакти</h1>
+                <ul class="links">
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Намери най-близката аптека</a></li>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Email</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Logo Section -->
+        <div class="logo-container">
+            <div class="logo">
+                <img src="/static/image/company-logo2.png" alt="Company Logo" Logo">
+            </div>
+            <div class="logo1">
+                <img src="/static/image/company-text-logo.png" alt="Company Name" Logo">
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="/static/js/news-popup.js"></script>
+</body>
+</html>
