@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Потребителски панел</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/user-profile.css}">
+    <link rel="stylesheet" th:href="@{/css/main-header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+</head>
+<body>
+
+<!--!&#45;&#45; Main Header &ndash;&gt;-->
+<header class="main-header">
+    <div class="container d-flex justify-content-between align-items-center py-3">
+        <div class="search-bar d-flex align-items-center">
+            <input type="text" placeholder="Search..." class="form-control">
+            <i class="bi bi-search search-icon"></i>
+
+            <a href="/promotions" class="nav-item promotions-link">
+                <img src="/images/discount-icon.png" alt="Promotions">
+                <span>Промоции</span>
+            </a>
+
+        </div>
+
+        <a href="/" class="logo">
+            <img src="images/company-logo2.png" alt="Company Logo">
+        </a>
+
+        <nav class="nav-links d-flex align-items-center">
+
+            <a href="/login" class="nav-item login-link">
+                <img src="/images/user-icon1.png" alt="Login">
+                <span>Вход Регистрация</span>
+            </a>
+            <a href="/favorites" class="nav-item favorites-link">
+                <img src="/images/favorite-icon.png" alt="Favorites">
+                <span class="badge bg-success">0</span>
+            </a>
+            <a href="/cart" class="nav-item cart-link">
+                <img src="/images/cart-icon.png" alt="Cart">
+                <span class="badge bg-success">0</span>
+            </a>
+        </nav>
+    </div>
+</header>
+
+<!-- Sub-header -->
+
+<header class="sub-header">
+    <div class="sub-header-left">
+        <a href="/consultation" class="chat-link">
+            <div class="chat-icon">
+                <i class="bi bi-chat-right-dots"></i>
+            </div>
+            <span>Онлайн консултация с фармацевт</span>
+        </a>
+    </div>
+    <div class="sub-header-center">
+        <img src="/images/company-text-logo.png" alt="Sub Logo">
+    </div>
+    <div class="sub-header-right">
+        <a href="/pharmacies" class="location-link">
+            <div class="truck-icon">
+                <i class="bi bi-truck"></i>
+            </div>
+            <span>Безплатна доставка над <span class="price">49.99лв.</span></span>
+        </a>
+    </div>
+</header>
+
+<!-- Categories Header -->
+
+<nav class="category-header">
+    <ul class="category-menu">
+        <li class="category-item">
+            <a href="#" class="category-link">Category 1</a>
+            <ul class="subcategory-menu">
+                <li><a href="/category1/sub1">Subcategory 1</a></li>
+                <li><a href="/category1/sub2">Subcategory 2</a></li>
+                <li><a href="/category1/sub3">Subcategory 3</a></li>
+            </ul>
+        </li>
+        <li class="category-item">
+            <a href="#" class="category-link">Category 2</a>
+            <ul class="subcategory-menu">
+                <li><a href="/category2/sub1">Subcategory 1</a></li>
+                <li><a href="/category2/sub2">Subcategory 2</a></li>
+            </ul>
+        </li>
+        <li class="category-item">
+            <a href="#" class="category-link">Category 3</a>
+            <ul class="subcategory-menu">
+                <li><a href="/category3/sub1">Subcategory 1</a></li>
+                <li><a href="/category3/sub2">Subcategory 2</a></li>
+            </ul>
+        </li>
+        <li class="category-item">
+            <a href="#" class="category-link">Category 1</a>
+            <ul class="subcategory-menu">
+                <li><a href="/category1/sub1">Subcategory 1</a></li>
+                <li><a href="/category1/sub2">Subcategory 2</a></li>
+                <li><a href="/category1/sub3">Subcategory 3</a></li>
+            </ul>
+        </li>
+        <li class="category-item">
+            <a href="#" class="category-link">Category 1</a>
+            <ul class="subcategory-menu">
+                <li><a href="/category1/sub1">Subcategory 1</a></li>
+                <li><a href="/category1/sub2">Subcategory 2</a></li>
+                <li><a href="/category1/sub3">Subcategory 3</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+
+<div class="main-cont container mt-5">
+    <!-- Greeting -->
+    <h2 class="mb-4">Здравейте, <span id="user-name" th:text="${userProfileDTO.firstName} + ' ' + ${userProfileDTO.lastName}"></span></h2>
+
+    <!-- Tabs Navigation -->
+    <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="management" th:classappend="${activeTab == 'management'} ? 'active'" th:href="@{/user-profile/management}" >
+                <i class="fas fa-user"></i> Управление на профила
+            </a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="favorite-products-tab" th:classappend="${activeTab == 'favorite-products'} ? 'active'" th:href="@{/user-profile/favorite-products}" type="button" role="tab" aria-controls="favorites" aria-selected="false">
+                <i class="fas fa-heart"></i> Любими
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="orders-tab" onclick="loadSection('orders')" type="button" role="tab" aria-controls="orders" aria-selected="false">
+                <i class="fas fa-truck"></i> Поръчки
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="shipping-data-tab" onclick="loadSection('shipping-data')" type="button" role="tab" aria-controls="shipping" aria-selected="false">
+                <i class="fas fa-map-marker-alt"></i> Данни за доставка
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="email-preferences-tab" onclick="loadSection('email-preferences')" type="button" role="tab" aria-controls="email1" aria-selected="false">
+                <i class="fas fa-envelope"></i> Емайл предпочитания
+            </button>
+        </li>
+    </ul>
+
+    <!-- Tabs Content -->
+    <div class="tab-content" id="profileTabsContent">
+
+        <div th:replace="~{'user/fragments/' + ${activeTab}}"></div>
+<!--        ~{'user/fragments/' + ${activeTab}}-->
+
+    </div>
+
+</div>
+
+<footer>
+
+    <div class="footer-wrapper">
+
+        <div class="footer">
+            <!-- Left Section -->
+
+
+            <!-- Right Section -->
+
+            <div class="first-section">
+                <h1>Аптека</h1>
+                <ul class="links">
+                    <li><a href="#">Общи условия</a></li>
+                    <li><a href="#">За нас</a></li>
+                    <li><a href="#">Условия за доставка</a></li>
+                </ul>
+                <!--        <div class="footer-bottom">-->
+                <!--          <p>Всички права запазени</p>-->
+                <!--        </div>-->
+            </div>
+
+            <div style="border-left: 1px solid #6a1b9a; height: 100px; margin: 0 5px -20px;"></div>
+
+            <div class="right-section">
+                <h1>Контакти</h1>
+                <ul class="links">
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Намери най-близката аптека</a></li>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Email</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Logo Section -->
+        <div class="logo-container">
+            <div class="logo">
+                <img src="/images/company-logo2.png" alt="Company Logo">
+            </div>
+            <div class="logo1">
+                <img src="/images/company-text-logo.png" alt="Company Name">
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+
+
+
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

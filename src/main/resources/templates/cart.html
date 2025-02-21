@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,67 @@
 
 <body>
 <!-- Main Header -->
-<header th:replace="fragments/header :: main-header"></header>
+<!--<header th:replace="fragments/header :: main-header"></header>-->
+
+<header th:fragment="main-header" class="main-header">
+    <div class="container d-flex justify-content-between align-items-center py-3">
+        <div class="search-bar d-flex align-items-center">
+            <input type="text" placeholder="Search..." class="form-control">
+            <i class="bi bi-search search-icon"></i>
+
+            <a href="/promotions" class="nav-item promotions-link">
+                <img th:src="@{/images/discount-icon.png}" alt="Promotions">
+                <span>Промоции</span>
+            </a>
+
+        </div>
+
+        <a th:href="@{/}" class="logo">
+            <img th:src="@{/images/company-logo2.png}" alt="Company Logo">
+        </a>
+
+        <nav class="nav-links d-flex align-items-center">
+
+            <!-- Линк към профила (само ако е логнат) -->
+
+            <img src="/images/user-icon1.png" alt="Logout">
+            <div>
+                <a sec:authorize="isAuthenticated()" th:href="@{/user-profile/management}" class="nav-item login-link" id="profile-text">Профил</a>
+                <a sec:authorize="isAuthenticated()" href="#" class="nav-item login-link" onclick="document.getElementById('logoutForm').submit(); return false;">
+                    <span id="logout-text">Изход</span>
+                </a>
+                <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="nav-item login-link">
+                    <!--                    <img src="/images/user-icon1.png" alt="Login">-->
+                    <span>Вход Регистрация</span>
+                </a>
+            </div>
+
+            <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;">
+                <input type="hidden">
+            </form>
+
+
+
+            <a href="/user-profile/favoriteProducts" class="nav-item favorites-link">
+                <img src="/images/favorite-icon.png" alt="Favorites">
+                <span class="badge bg-success"
+                      sec:authorize="isAuthenticated()"
+                      th:text="${baseUserInfoDTO.favoriteProductsCount()}">0</span>
+                <span class="badge bg-success"
+                      sec:authorize="!isAuthenticated()">0</span>
+            </a>
+
+            <a th:href="@{/user/cart}" class="nav-item cart-link">
+                <img src="/images/cart-icon.png" alt="Cart">
+                <span class="badge bg-succes"
+                      sec:authorize="isAuthenticated()"
+                      th:text="${baseUserInfoDTO.cartProductsCount()}">0</span>
+                <span class="badge bg-success"
+                      sec:authorize="!isAuthenticated()">0</span>
+            </a>
+        </nav>
+    </div>
+</header>
 
 <!-- Sub-header -->
 <header th:replace="fragments/header :: sub-header"></header>
@@ -33,45 +94,64 @@
 
     <div class="cart-content">
         <!-- Лява секция: Таблица с продуктите -->
+
+
         <div class="cart-table">
-            <div class="cart-header">
+            <p th:if="${userCartDTO.productsDTO.isEmpty()}">Все още нямате продукти в количката</p>
+
+            <div th:unless="${userCartDTO.productsDTO.isEmpty()}" class="cart-header">
                 <span>Име</span>
                 <span>Ед. цена</span>
                 <span>Брой</span>
                 <span>Сума</span>
             </div>
             <hr class="divider">
-            <div class="cart-item">
+            <div th:each="cartItem : *{userCartDTO.productsDTO}" class="cart-item"
+                 th:data-id="${cartItem.id}"
+                 th:data-name="${cartItem.title}"
+                 th:data-price="${cartItem.promotion != null ? #numbers.formatDecimal(cartItem.price * (1 - cartItem.promotion.discountPercentage / 100),1,2) : cartItem.price}"
+                 th:data-image="${cartItem.image.locatedOn}">
+
                 <a href="/product-details" class="product-card-link">
-                    <img src="/images/products/doppelherz-imuno-kids.png" alt="Product Image">
+                    <img th:src="@{${cartItem.image.locatedOn}}" alt="Product Image">
 
                     <div class="item-details">
-                    <p class="item-name">Продукт 1</p>
-                    </a>
+                    <p th:text="${cartItem.title}" class="item-name">Продукт</p>
                 </div>
+                </a>
 
-                <p class="item-price">
-                    <span class="old-price">50.00 лв.</span><br>
-                    <span class="new-price">45.00 лв.</span>
+                <p th:if="${cartItem.promotion != nul}" class="item-price">
+                    <span class="old-price" th:text="${cartItem.price}">Цена лв.</span><br>
+                    <span class="new-price" th:text="${#numbers.formatDecimal(cartItem.price * (1 - cartItem.promotion.discountPercentage / 100),1,2)}">Цена лв.</span>
+                </p>
+                <p th:if="${cartItem.promotion == null}" class="item-price">
+                    <span class="new-price" th:text="${cartItem.price} + 'лв.'">Цена лв.</span><br>
                 </p>
 
                 <div class="item-quantity-control">
                     <button class="quantity-btn minus-btn">-</button>
-                    <input value="1" class="item-quantity" readonly>
+                    <input
+                            class="item-quantity readonly"
+                            name="quantities"
+                            th:value="${cartItem.quantity}"
+                            min="1">
                     <button class="quantity-btn plus-btn">+</button>
                 </div>
-                <p class="item-sum">45.00 лв.</p>
-                <button class="remove-item-btn bi-trash3"></button>
 
+                <p class="item-sum"
+                   th:text="${cartItem.quantity} * (${cartItem.promotion != null
+                                                        ? #numbers.formatDecimal(cartItem.price * (1 - cartItem.promotion.discountPercentage / 100),1,2)
+                                                        : cartItem.price}) + ' лв.'">
+                    Обща цена лв.</p>
 
+                <form th:action="@{/user/cart/product-remove/{id}(id=${cartItem.id})}" method="POST">
+                    <input type="hidden" name="_method" value="DELETE"/>
+                <button type="submit" class="remove-item-btn bi-trash3"></button>
+                </form>
 
-
-<!--                <input type="number" value="1" class="item-quantity">-->
-<!--                <p class="item-sum">45.00 лв.</p>-->
-<!--                <button class="remove-item-btn">🗑️</button>-->
+                <hr class="divider">
             </div>
 
-            <hr class="divider">
             <button class="continue-shopping-btn" onclick="window.location.href='/'">Продължи с пазаруването</button>
         </div>
 
@@ -81,23 +161,47 @@
             <hr class="divider">
             <div class="free-delivery">
                 <img src="/images/promo-icon.png" alt="Promo Icon">
-                <p>Добави продукти за още <span>25.00 лв.</span> и вземи безплатна доставка</p>
+                <p class="free-msg" >
+                    Добави продукти за още
+                    <span th:text="${#numbers.formatDecimal(userCartDTO.balanceToFreeShipping - userCartDTO.totalPrice,1,2)} + ' лв.'">цена лв.</span>
+                    и вземи безплатна доставка
+                </p>
+                <p class="free-msg-achieved" >
+                    Вие достигнахте сумата от
+                    <span th:text="${userCartDTO.balanceToFreeShipping} + ' лв.'">сума лв.</span>
+                    и получавате безплатна доставка!
+                </p>
             </div>
             <hr class="divider">
-            <div class="summary-details">
-                <p>Междинна сума: <span> 45.00 лв.</span></p>
-                <p>Доставка: <span>5.00 лв.</span></p>
+            <div class="summary-details" >
+
+                <p class="subtotal" th:if="${userCartDTO.totalPrice <= userCartDTO.balanceToFreeShipping}">
+                    Междинна сума:
+                    <span th:text="${userCartDTO.totalPrice} + ' лв.'"> Обща сума лв.</span>
+                </p>
+                <p class="delivery" th:if="${userCartDTO.totalPrice <= userCartDTO.balanceToFreeShipping}">
+                    Доставка:
+                    <span>5.00 лв.</span>
+                </p>
                 <hr class="divider">
                 <div class="total-sum">
-                <p>Обща сума: <span>50.00 лв.</span></p>
+                <p>
+                    Обща сума:
+                    <span th:text="${userCartDTO.totalPrice + (userCartDTO.totalPrice < userCartDTO.balanceToFreeShipping ? 5.00 : 0)} + ' лв.'">сума лв.</span>
+                </p>
                 </div>
                 <hr class="divider">
                 <div class="saved-money">
-                <p>Спестяваш: <span>5.00 лв.</span></p>
+                <p>Спестяваш:
+                    <span th:text="${userCartDTO.savedMoney + (userCartDTO.totalPrice < userCartDTO.balanceToFreeShipping ? 0 : 5.00)} + ' лв.' ">Спестена сума лв.</span>
+                </p>
                 </div>
                 <p class="vat-note">*Всички цени са с включено ДДС</p>
             </div>
-            <button class="checkout-btn" onclick="window.location.href='/user/cart-checkout'">Към завършване</button>
+            <form id="checkout-form" th:action="@{/user/cart-checkout}" method="POST">
+                <input type="hidden" name="cartData" id="cart-data">
+            <button class="checkout-btn" id="checkout-btn" type="button">Към завършване</button>
+            </form>
         </div>
     </div>
 
@@ -255,16 +359,17 @@
         <!-- Logo Section -->
         <div class="logo-container">
             <div class="logo">
-                <img src="/images/company-logo2.png" alt="Company Logo" Logo">
+                <img src="/images/company-logo2.png" alt="Company Logo">
             </div>
             <div class="logo1">
-                <img src="/images/company-text-logo.png" alt="Company Name" Logo">
+                <img src="/images/company-text-logo.png" alt="Company Name">
             </div>
 
         </div>
     </div>
 </footer>
 
+<script th:src="@{/js/user-cart.js}"></script>
 
 </body>
 </html>

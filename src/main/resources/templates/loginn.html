@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login Page</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+  <link rel="stylesheet" th:href="@{/css/login.css}">
+  <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+</head>
+
+<body>
+
+<div id="floating-logos-container"></div>
+
+<header class="header">
+  <div class="container d-flex justify-content-between align-items-center py-2">
+    <a href="/" class="arrow-back"><i class="bi bi-arrow-left-circle"></i> Back</a>
+    <img src="/images/company-logo2.png" alt="Company Logo" class="logo">
+    <div class="secure">
+      <i class="bi bi-lock"></i> Secure
+    </div>
+  </div>
+</header>
+
+
+
+<div class="secondary-header" id="secondaryHeader">
+  <img src="/images/company-text-logo.png" alt="Extra Logo" class="extra-logo">
+</div>
+
+<form
+        th:action="@{/login}"
+        th:method="POST"
+>
+<div class="container login-container">
+
+  <div class="login-form">
+    <!-- Left side of the login form -->
+    <div class="col-md-6 left-side">
+      <h2>Create an account</h2>
+      <ul>
+        <li><span class="tick">&#10003;</span> Faster checkout</li>
+        <li><span class="tick">&#10003;</span> Exclusive weekly offers</li>
+        <li><span class="tick">&#10003;</span> Instant access to your orders</li>
+      </ul>
+      <a th:href="@{/register}" class="btn btn-purple w-100">Create account</a>
+    </div>
+
+    <!-- Right side of the login form -->
+    <div class="col-md-6 right-side">
+      <h2>Sign in</h2>
+      <form>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+                  name="email"
+                  type="email"
+                  id="email"
+                  class="form-control"
+                  placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-container position-relative w-50">
+          <input
+                  name="password"
+                  type="password"
+                  id="password"
+                  class="password-input form-control"
+                  placeholder="Enter your password">
+            <button class="toggle-password btn position-absolute end-0 top-50 translate-middle-y border-0 bg-transparent px-2" type="button">
+              <i class="bi bi-eye"></i>
+            </button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-purple w-100">Sign in</button>
+      </form>
+      <a href="#" class="forgot-password">Forgot your password?</a>
+    </div>
+  </div>
+
+</div>
+</form>
+
+<footer>
+  <div class="footer-wrapper">
+
+    <div class="footer">
+      <!-- Left Section -->
+
+
+      <!-- Right Section -->
+
+      <div class="first-section">
+        <h1>Аптека</h1>
+        <ul class="links">
+          <li><a href="#">Общи условия</a></li>
+          <li><a href="#">За нас</a></li>
+          <li><a href="#">Условия за доставка</a></li>
+        </ul>
+        <!--        <div class="footer-bottom">-->
+        <!--          <p>Всички права запазени</p>-->
+        <!--        </div>-->
+      </div>
+
+      <div style="border-left: 1px solid #6a1b9a; height: 100px; margin: 0 5px -20px;"></div>
+
+      <div class="right-section">
+        <h1>Контакти</h1>
+        <ul class="links">
+          <li><a href="#"><i class="fas fa-map-marker-alt"></i> Намери най-близката аптека</a></li>
+          <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+          <li><a href="#"><i class="fas fa-envelope"></i> Email</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Logo Section -->
+    <div class="logo-container">
+      <div class="logo">
+        <img src="/images/company-logo2.png" alt="Company Logo">
+      </div>
+      <div class="logo1">
+        <img src="/images/company-text-logo.png" alt="Company Name">
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+
+<script th:src="@{/js/login-register.js}"></script>
+
+
+<!--<script>-->
+<!--  document.addEventListener('DOMContentLoaded', () => {-->
+<!--    const container = document.getElementById('floating-logos-container');-->
+<!--    const numberOfLogos = 30; // Брой логота-->
+<!--    const logoImage = '/static/image/pill-icon.png'; // Път до логото-->
+
+<!--    for (let i = 0; i < numberOfLogos; i++) {-->
+<!--      const logo = document.createElement('div');-->
+<!--      logo.classList.add('floating-logo');-->
+<!--      logo.style.backgroundImage = `url(${logoImage})`;-->
+<!--      logo.style.left = `${Math.random() * 100}vw`; // Случайно позициониране по ширина-->
+<!--      logo.style.top = `${Math.random() * 100}vh`; // Случайно позициониране по височина-->
+<!--      logo.style.animationDuration = `${Math.random() * 15 + 5}s`; // Случайна скорост-->
+<!--      container.appendChild(logo);-->
+
+<!--      // Събитие при докосване с мишката-->
+<!--      // logo.addEventListener('mouseover', () => {-->
+<!--      //   logo.style.transform = 'scale(1.5) translateY(-50px)'; // Отскок-->
+<!--      //   setTimeout(() => {-->
+<!--      //     logo.style.transform = ''; // Връщане в изходно положение-->
+<!--      //   }, 500);-->
+<!--      // });-->
+
+<!--      // logo.addEventListener("mouseover", () => {-->
+<!--      //   const newX = Math.random() * 100; // Нова произволна позиция-->
+<!--      //   const newY = Math.random() * 100;-->
+<!--      //-->
+<!--      //   logo.style.transition = "transform 0.5s ease";-->
+<!--      //   logo.style.transform = `translate(${newX}vw, ${newY}vh)`;-->
+<!--      //-->
+<!--      //   // Премахваме transition след отскока-->
+<!--      //   setTimeout(() => {-->
+<!--      //     logo.style.transition = "";-->
+<!--      //     logo.style.transform = "";-->
+<!--      //     logo.style.left = `${newX}vw`;-->
+<!--      //     logo.style.top = `${newY}vh`;-->
+<!--      //   }, 500);-->
+<!--      // });-->
+
+
+<!--    }-->
+<!--  });-->
+<!--</script>-->
+
+</body>
+
+</html>

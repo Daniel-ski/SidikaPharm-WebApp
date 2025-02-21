@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="bg"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ Панел - Блог</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .blog-title {
+        font-weight: bold;
+        /*color: #6a0dad; !* Лилав цвят *!*/
+    }
+
+    /* Поле за търсене */
+
+    .container {
+        max-width: 1000px;
+        margin-top: 40px;
+    }
+
+    .search-box {
+        max-width: 300px;
+    }
+
+    /*.search-container {*/
+    /*    display: flex;*/
+    /*    align-items: center;*/
+    /*    border: 1px solid ;*/
+    /*    border-radius: 5px;*/
+    /*    overflow: hidden;*/
+    /*}*/
+
+    /*.search-container input {*/
+    /*    border: none;*/
+    /*    padding: 5px;*/
+    /*    outline: none;*/
+    /*}*/
+
+    /*.search-btn {*/
+    /*    !*background: #6a0dad;*!*/
+    /*    color: white;*/
+    /*    border: none;*/
+    /*    padding: 5px 10px;*/
+    /*    cursor: pointer;*/
+    /*}*/
+
+    /*.search-btn:hover {*/
+    /*    !*background: #570b9b;*!*/
+    /*}*/
+
+    /* Дизайн за бутоните */
+    .btn {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container mt-4">
+    <!-- Заглавие и поле за търсене -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="blog-title">Блог</h2>
+        <div class="input-group search-box">
+            <input type="text" class="form-control" id="searchOrder" placeholder="Търсене на поръчка...">
+            <button class="btn btn-outline-secondary" id="searchButton">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Бутоните за действия -->
+    <div class="d-flex justify-content-end mb-3">
+        <button id="editBtn" class="btn btn-warning me-2" disabled>Редактирай</button>
+        <button id="deleteBtn" class="btn btn-danger me-2" disabled>Изтрий</button>
+        <button id="createBlogBtn" class="btn btn-primary">Създай</button>
+    </div>
+
+    <!-- Таблица със статиите -->
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><input type="checkbox" id="selectAll"></th>
+                <th>Заглавие</th>
+                <th>Създадена на</th>
+                <th>Създадена от</th>
+                <th>Редактирана на</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input type="checkbox" class="article-checkbox"></td>
+                <td>Примерна статия 1</td>
+                <td>12.01.2025</td>
+                <td>Admin</td>
+                <td>13.01.2025</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="article-checkbox"></td>
+                <td>Примерна статия 2</td>
+                <td>10.01.2025</td>
+                <td>Editor</td>
+                <td>11.01.2025</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script th:src="@{/js/admin-panel.js}"></script>
+<script>
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     const createBlogBtn = document.getElementById("createBlogBtn");
+    //     const content = document.getElementById("content");
+    //
+    //     if (createBlogBtn) {
+    //         createBlogBtn.addEventListener("click", function () {
+    //             fetch("admin/blogs/create-article.html") // Зарежда формата за нова статия
+    //                 .then(response => response.text())
+    //                 .then(html => {
+    //                     content.innerHTML = html;
+    //                 })
+    //                 .catch(error => console.error("Error loading page:", error));
+    //         });
+    //     }
+    // });
+</script>
+
+</body>
+</html>
