@@ -23,22 +23,15 @@
 
 </head>
 <body>
+<header th:replace="~{fragments/header :: main-header}"></header>
 
-<!-- Main Header -->
-<header th:replace="fragments/header :: main-header"></header>
+<header th:replace="~{fragments/header :: sub-header}"></header>
 
-<!-- Sub-header -->
-<header th:replace="fragments/header :: sub-header"></header>
-
-<!-- Categories Header -->
-<nav th:replace="fragments/header :: category-header"></nav>
-
+<nav th:replace="~{fragments/header :: category-header}"></nav>
 
 <div class="main-cont container mt-5">
-    <!-- Greeting -->
-    <h2 class="mb-4">Здравейте, <span id="user-name" th:text="${userProfileDTO.firstName} + ' ' + ${userProfileDTO.lastName}"></span></h2>
+    <h2 class="mb-4">Здравейте, <span id="user-name" th:text="${baseUserInfoDTO.firstName()} + ' ' + ${baseUserInfoDTO.lastName}"></span></h2>
 
-    <!-- Tabs Navigation -->
     <ul class="nav nav-tabs" id="profileTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="profile-tab" th:href="@{/user-profile/management}" role="tab" aria-controls="profile" aria-selected="false">
@@ -67,12 +60,11 @@
         </li>
     </ul>
 
-    <!-- Tabs Content -->
     <div class="tab-content" id="profileTabsContent">
-        <!-- Profile Management -->
 
         <div class="container mt-4">
             <h3 class="mb-4">Поръчки</h3>
+
 
             <p th:if="${allOrders == null or #lists.isEmpty(allOrders)}">Все още нямате направени поръчки.</p>
 
@@ -88,29 +80,27 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!-- Пример за една поръчка -->
                 <tr th:each="order, iterStat : ${allOrders}">
                     <th scope="row" th:text="${iterStat.count}">count</th>
                     <td th:text="${order.id}">id</td>
-                    <td th:text="${#dates.format(order.createdOn,'dd/MM/yyyy')}">date</td>
+                    <td th:text="${order.createdOn}">date</td>
                     <td th:text="${order.totalPrice + ' лв.'}">totalPrice</td>
                     <td>
+
                         <span class="badge"
                               th:classappend="${order.status.name() == 'COMPLETE'} ? 'bg-success'
                                                 : (${order.status.name() == 'IN_PROGRESS'} ? 'bg-warning text-white'
-                                                 : 'bg-danger')">
-                        th:text="${order.status}">status</span></td>
+                                                 : 'bg-danger')"
+                        th:text="${order.status.value}">status</span></td>
                     <td>
                         <button class="tbl btn btn-primary btn-sm" data-bs-toggle="modal"
                                th:attr="data-bs-target='#orderModal' + ${order.id}">Преглед</button>
                     </td>
                 </tr>
-                <!-- Добави още поръчки тук -->
                 </tbody>
             </table>
         </div>
 
-        <!-- Modal за детайли на поръчка -->
         <th:block th:each="order : ${allOrders}">
         <div class="modal fade" th:id="'orderModal' + ${order.id}" tabindex="-1"
              aria-labelledby="orderModalLabel" aria-hidden="true">
@@ -125,91 +115,40 @@
                     <div class="modal-body">
                         <div class="container">
                             <div class="row">
-                                <!-- Пример за продукт -->
                                 <div class="col-md-6 mb-3 d-flex align-items-center"
                                 th:each="product : ${order.products}">
-                                    <img th:src="${product.picture.locatedOn}" alt="Продукт" class="me-3">
+                                    <img th:src="${product.image}" alt="Продукт" class="me-3">
                                     <div>
-                                        <h6 class="mb-1" th:text="${product.title}">Име на продукт</h6>
+                                        <h6 class="mb-1" id="product-name" th:text=" ${product.name}">Име на продукт</h6>
                                         <p class="mb-0">Количество:
-                                            <span > quantity </span></p>
-                                        <p class="mb-0" th:text="${product.price + ' лв.'}">Цена:<span> price </span></p>
+                                            <span th:text="${product.quantity}" > quantity </span></p>
+                                        <p class="mb-0" >Цена:
+                                            <br>
+                                            <span th:text="${product.price + ' лв.'}"> price </span></p>
                                     </div>
                                 </div>
 
-
-                                <!-- Повече продукти могат да се добавят тук -->
                             </div>
                         </div>
                         <hr>
-                        <p><strong>Тип доставка:</strong> <span> Стандартна </span></p>
-                        <p><strong>Обща стойност:</strong> <span class="total"> 150.00 лв. </span></p>
-                    </div>
-                    <div class="modal-footer">
-                        <!--                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Затвори</button>-->
+                        <p><strong>Тип доставка:</strong>
+                            <span th:text="${order.deliveryType.value}"> Стандартна </span>
+                        </p>
+                        <p><strong>Обща стойност:</strong>
+                            <span class="total" th:text="${#numbers.formatDecimal(order.totalPrice, 1, 2) + ' лв.'}"> Тотал лв. </span>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
         </th:block>
 
-
-
-
     </div>
 
 </div>
 
-<footer>
+<footer th:replace="~{fragments/footer}"></footer>
 
-
-
-    <div class="footer-wrapper">
-
-        <div class="footer">
-            <!-- Left Section -->
-
-
-            <!-- Right Section -->
-
-            <div class="first-section">
-                <h1>Аптека</h1>
-                <ul class="links">
-                    <li><a href="#">Общи условия</a></li>
-                    <li><a href="#">За нас</a></li>
-                    <li><a href="#">Условия за доставка</a></li>
-                </ul>
-                <!--        <div class="footer-bottom">-->
-                <!--          <p>Всички права запазени</p>-->
-                <!--        </div>-->
-            </div>
-
-            <div style="border-left: 1px solid #6a1b9a; height: 100px; margin: 0 5px -20px;"></div>
-
-            <div class="right-section">
-                <h1>Контакти</h1>
-                <ul class="links">
-                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Намери най-близката аптека</a></li>
-                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
-                    <li><a href="#"><i class="fas fa-envelope"></i> Email</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Logo Section -->
-        <div class="logo-container">
-            <div class="logo">
-                <img src="/images/company-logo2.png" alt="Company Logo">
-            </div>
-            <div class="logo1">
-                <img src="/images/company-text-logo.png" alt="Company Name">
-            </div>
-
-        </div>
-    </div>
-</footer>
-
-<!-- Font Awesome -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 </html>

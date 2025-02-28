@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html
         lang="en"
-        xmlns:th="http://www.thymeleaf.org">
+        xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,8 +12,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
     <link rel="stylesheet" th:href="@{/css/user-profile.css}">
@@ -22,118 +20,16 @@
 
 </head>
 <body>
+<header th:replace="~{fragments/header :: main-header}"></header>
 
-<!--!&#45;&#45; Main Header &ndash;&gt;-->
-<header class="main-header">
-    <div class="container d-flex justify-content-between align-items-center py-3">
-        <div class="search-bar d-flex align-items-center">
-            <input type="text" placeholder="Search..." class="form-control">
-            <i class="bi bi-search search-icon"></i>
+<header th:replace="~{fragments/header :: sub-header}"></header>
 
-            <a href="/promotions" class="nav-item promotions-link">
-                <img src="/images/discount-icon.png" alt="Promotions">
-                <span>Промоции</span>
-            </a>
-
-        </div>
-
-        <a href="/static" class="logo">
-            <img src="/images/company-logo2.png" alt="Company Logo">
-        </a>
-
-        <nav class="nav-links d-flex align-items-center">
-
-            <a href="/login" class="nav-item login-link">
-                <img src="/images/user-icon1.png" alt="Login">
-                <span>Вход Регистрация</span>
-            </a>
-            <a href="/favorites" class="nav-item favorites-link">
-                <img src="/images/favorite-icon.png" alt="Favorites">
-                <span class="badge bg-success">0</span>
-            </a>
-            <a href="/cart" class="nav-item cart-link">
-                <img src="/images/cart-icon.png" alt="Cart">
-                <span class="badge bg-success">0</span>
-            </a>
-        </nav>
-    </div>
-</header>
-
-<!-- Sub-header -->
-
-<header class="sub-header">
-    <div class="sub-header-left">
-        <a href="/consultation" class="chat-link">
-            <div class="chat-icon">
-                <i class="bi bi-chat-right-dots"></i>
-            </div>
-            <span>Онлайн консултация с фармацевт</span>
-        </a>
-    </div>
-    <div class="sub-header-center">
-        <img src="/images/company-text-logo.png" alt="Sub Logo">
-    </div>
-    <div class="sub-header-right">
-        <a href="/pharmacies" class="location-link">
-            <div class="truck-icon">
-                <i class="bi bi-truck"></i>
-            </div>
-            <span>Безплатна доставка над <span class="price">49.99лв.</span></span>
-        </a>
-    </div>
-</header>
-
-<!-- Categories Header -->
-
-<nav class="category-header">
-    <ul class="category-menu">
-        <li class="category-item">
-            <a href="#" class="category-link">Category 1</a>
-            <ul class="subcategory-menu">
-                <li><a href="/category1/sub1">Subcategory 1</a></li>
-                <li><a href="/category1/sub2">Subcategory 2</a></li>
-                <li><a href="/category1/sub3">Subcategory 3</a></li>
-            </ul>
-        </li>
-        <li class="category-item">
-            <a href="#" class="category-link">Category 2</a>
-            <ul class="subcategory-menu">
-                <li><a href="/category2/sub1">Subcategory 1</a></li>
-                <li><a href="/category2/sub2">Subcategory 2</a></li>
-            </ul>
-        </li>
-        <li class="category-item">
-            <a href="#" class="category-link">Category 3</a>
-            <ul class="subcategory-menu">
-                <li><a href="/category3/sub1">Subcategory 1</a></li>
-                <li><a href="/category3/sub2">Subcategory 2</a></li>
-            </ul>
-        </li>
-        <li class="category-item">
-            <a href="#" class="category-link">Category 1</a>
-            <ul class="subcategory-menu">
-                <li><a href="/category1/sub1">Subcategory 1</a></li>
-                <li><a href="/category1/sub2">Subcategory 2</a></li>
-                <li><a href="/category1/sub3">Subcategory 3</a></li>
-            </ul>
-        </li>
-        <li class="category-item">
-            <a href="#" class="category-link">Category 1</a>
-            <ul class="subcategory-menu">
-                <li><a href="/category1/sub1">Subcategory 1</a></li>
-                <li><a href="/category1/sub2">Subcategory 2</a></li>
-                <li><a href="/category1/sub3">Subcategory 3</a></li>
-            </ul>
-        </li>
-    </ul>
-</nav>
+<nav th:replace="~{fragments/header :: category-header}"></nav>
 
 
 <div class="main-cont container mt-5">
-    <!-- Greeting -->
     <h2 class="mb-4">Здравейте, <span id="user-name" th:text="${userProfileDTO.firstName} + ' ' + ${userProfileDTO.lastName}"></span></h2>
 
-    <!-- Tabs Navigation -->
     <ul class="nav nav-tabs" id="profileTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="profile-tab" th:href="@{/user-profile/management}" role="tab" aria-controls="profile" aria-selected="true">
@@ -162,9 +58,7 @@
         </li>
     </ul>
 
-    <!-- Tabs Content -->
     <div class="tab-content" id="profileTabsContent">
-        <!-- Profile Management -->
             <h3>Данни за Доставка </h3>
         <form
                 th:action="@{/user-profile/shipping/update}"
@@ -178,7 +72,6 @@
                  data-bs-delay="3000" data-bs-autohide="true">
                 <span> Данните за доставка бяха успешно обновени! </span>
             </div>
-
 
             <div class="row mb-3">
                 <div class="col-md-6">
@@ -206,11 +99,11 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="city" class="form-label">Град</label>
-                    <select class="form-select" id="city">
-                        <option selected>Изберете град</option>
-                        <option value="1">София</option>
-                        <option value="2">Пловдив</option>
-                        <option value="3">Варна</option>
+                    <select class="form-select" id="city" th:field="*{town}">
+                        <option value="" th:selected="${userProfileDTO.deliveryDetails.town == null}">Изберете град</option>
+                        <option value="София">София</option>
+                        <option value="Пловдив">Пловдив</option>
+                        <option value="Варна">Варна</option>
                     </select>
                 </div>
                 <div class="col-md-6">
@@ -244,7 +137,7 @@
                                 id="street"
                                 name="street"
                                 placeholder="Вашата улица"
-                                th:field="*{street}"                        >
+                                th:field="*{street}" >
                     </div>
                     <div class="col-md-6">
                         <label for="streetNumber" class="form-label">Номер</label>
@@ -253,7 +146,7 @@
                                 class="form-control"
                                 id="streetNumber"
                                 placeholder="Номер на улица"
-                                th:field="*{number}"                        >
+                                th:field="*{number}" >
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -300,65 +193,10 @@
         </form>
         </div>
 
-
-
-
-
-
     </div>
 
-</div>
+<footer th:replace="~{fragments/footer}"></footer>
 
-<footer>
-
-
-
-    <div class="footer-wrapper">
-
-        <div class="footer">
-            <!-- Left Section -->
-
-
-            <!-- Right Section -->
-
-            <div class="first-section">
-                <h1>Аптека</h1>
-                <ul class="links">
-                    <li><a href="#">Общи условия</a></li>
-                    <li><a href="#">За нас</a></li>
-                    <li><a href="#">Условия за доставка</a></li>
-                </ul>
-                <!--        <div class="footer-bottom">-->
-                <!--          <p>Всички права запазени</p>-->
-                <!--        </div>-->
-            </div>
-
-            <div style="border-left: 1px solid #6a1b9a; height: 100px; margin: 0 5px -20px;"></div>
-
-            <div class="right-section">
-                <h1>Контакти</h1>
-                <ul class="links">
-                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Намери най-близката аптека</a></li>
-                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
-                    <li><a href="#"><i class="fas fa-envelope"></i> Email</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Logo Section -->
-        <div class="logo-container">
-            <div class="logo">
-                <img src="/images/company-logo2.png" alt="Company Logo">
-            </div>
-            <div class="logo1">
-                <img src="/images/company-text-logo.png" alt="Company Name">
-            </div>
-
-        </div>
-    </div>
-</footer>
-
-<!-- Font Awesome -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 </html>

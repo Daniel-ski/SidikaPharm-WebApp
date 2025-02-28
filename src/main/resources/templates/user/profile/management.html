@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Profile</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/user-profile.css}">
+    <link rel="stylesheet" th:href="@{/css/main-header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+</head>
+<body>
+
+<header th:replace="~{fragments/header :: main-header}"></header>
+
+<header th:replace="~{fragments/header :: sub-header}"></header>
+
+<nav th:replace="~{fragments/header :: category-header}"></nav>
+
+
+<div class="main-cont container mt-5">
+    <h2 class="mb-4">Здравейте, <span id="user-name" th:text="${userProfileManagementDTO.firstName} + ' ' + ${userProfileManagementDTO.lastName}"></span></h2>
+
+    <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="profile-tab" th:href="@{/user-profile/management}" role="tab" aria-controls="profile" aria-selected="true">
+                <i class="fas fa-user"></i> Управление на профила
+            </a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="favorites-tab" th:href="@{/user-profile/favoriteProducts}" role="tab" aria-controls="favorites" aria-selected="false">
+                <i class="fas fa-heart"></i> Любими
+            </a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="orders-tab" th:href="@{/user-profile/orders}" role="tab" aria-controls="orders" aria-selected="false">
+                <i class="fas fa-truck"></i> Поръчки
+            </a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="shipping-tab" th:href="@{/user-profile/shipping}" role="tab" aria-controls="shipping" aria-selected="false">
+                <i class="fas fa-map-marker-alt"></i> Данни за доставка
+            </a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="email-tab" th:href="@{/user-profile/email-preferences}" role="tab" aria-controls="email1" aria-selected="false">
+                <i class="fas fa-envelope"></i> Емайл предпочитания
+            </a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="profileTabsContent">
+        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <h3>Управление на профила</h3>
+
+            <div class="row">
+
+                <div class="col-md-5 form-section">
+
+                    <div th:if="${param.success}" class="success-toast alert alert-success alert-dismissible fade show" role="alert" aria-live="assertive" aria-atomic="true"
+                         data-bs-delay="3000" data-bs-autohide="true">
+                        <span> Профилът ви беше успешно обновен! </span>
+                    </div>
+
+                    <form
+                    th:action="@{/user-profile/management/update}"
+                    th:method="POST"
+                    th:object="${userProfileManagementDTO}"
+                    >
+
+                        <input type="hidden" name="_method" value="PATCH">
+
+
+                        <div class="mb-3">
+
+                            <label for="first-name" class="form-label">Име</label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="first-name"
+                                    name="firstName"
+                                    th:field="*{firstName}"
+                            >
+                        </div>
+                        <div class="mb-3">
+                            <label for="last-name" class="form-label">Фамилия</label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="last-name"
+                                    name="lastName"
+                                    th:field="*{lastName}"
+                            >
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Имейл</label>
+                            <input
+                                    type="email"
+                                    class="form-control"
+                                    id="email"
+                                    name="email"
+                                    th:field="*{email}"
+                            >
+                        </div>
+                        <button type="submit" class="save-btn btn btn-primary">Запази промените</button>
+                    </form>
+                </div>
+
+                <div class="col-md-1 vertical-divider"></div>
+
+                <div class="pass col-md-5 form-section">
+
+                    <div th:if="${param.successchange}" class="success-toast alert alert-success alert-dismissible fade show" role="alert" aria-live="assertive" aria-atomic="true"
+                         data-bs-delay="3000" data-bs-autohide="true">
+                        <span> Паролата ви беше успешно променена! </span>
+                    </div>
+
+                    <form
+                    th:action="@{/user-profile/management/update-password}"
+                    th:method="POST"
+                    th:object="${userProfilePasswordUpdateDTO}"
+                    >
+
+                        <input type="hidden" name="_method"  value="PATCH">
+
+                        <h4>Промяна на парола</h4>
+                        <div class="mb-3">
+                            <label for="old-password" class="form-label">Стара парола</label>
+
+                            <div class="password-container position-relative w-50">
+                            <input
+                                    type="password"
+                                    class="password-input form-control pe-5 rounded"
+                                    id="old-password"
+                                    name="oldPassword"
+                                    th:field="*{oldPassword}"
+                            >
+                                <button class="toggle-password btn position-absolute end-0 top-50 translate-middle-y border-0 bg-transparent px-2" type="button">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="new-password" class="form-label">Нова парола</label>
+
+                            <div class="password-container position-relative w-50">
+                            <input
+                                    type="password"
+                                    class="password-input form-control pe-5 rounded"
+                                    id="new-password"
+                                    name="newPassword"
+                                    th:field="*{newPassword}"
+                            >
+                                <button class="toggle-password btn position-absolute end-0 top-50 translate-middle-y border-0 bg-transparent px-2" type="button">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirm-password" class="form-label">Потвърди новата парола</label>
+
+                            <div class="password-container position-relative w-50">
+                            <input
+                                    type="password"
+                                    class="password-input form-control pe-5 rounded"
+                                    id="confirm-password"
+                                    name="confirmPassword"
+                                    th:field="*{confirmPassword}"
+                            >
+                                <button class="toggle-password btn position-absolute end-0 top-50 translate-middle-y border-0 bg-transparent px-2" type="button">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="submit" class="save-btn btn btn-primary">Запази промените</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<footer th:replace="~{fragments/footer}"></footer>
+
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script th:src="@{/js/user-profile.js}"></script>
+
+</body>
+</html>

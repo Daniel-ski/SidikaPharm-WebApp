@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- Main Header -->
+<header th:fragment="main-header" class="main-header">
+    <div class="container d-flex justify-content-between align-items-center py-3">
+        <div class="search-bar d-flex align-items-center">
+            <input type="text" placeholder="Search..." class="form-control">
+            <i class="bi bi-search search-icon"></i>
+
+            <a href="/promotions" class="nav-item promotions-link">
+                <img th:src="@{/images/discount-icon.png}" alt="Promotions">
+                <span>Промоции</span>
+            </a>
+
+        </div>
+
+        <a th:href="@{/}" class="logo">
+            <img th:src="@{/images/company-logo2.png}" alt="Company Logo">
+        </a>
+
+        <nav class="nav-links d-flex align-items-center">
+
+            <!-- Линк към профила (само ако е логнат) -->
+
+            <img src="/images/user-icon1.png" alt="Logout">
+            <div>
+                <a sec:authorize="isAuthenticated()" th:href="@{/user-profile/management}" class="nav-item login-link" id="profile-text">Профил</a>
+                <a sec:authorize="isAuthenticated()" href="#" class="nav-item login-link" onclick="document.getElementById('logoutForm').submit(); return false;">
+                    <span id="logout-text">Изход</span>
+                </a>
+                <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="nav-item login-link">
+<!--                    <img src="/images/user-icon1.png" alt="Login">-->
+                    <span>Вход Регистрация</span>
+                </a>
+            </div>
+
+            <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;">
+                <input type="hidden">
+            </form>
+
+
+
+            <a href="/user-profile/favoriteProducts" class="nav-item favorites-link">
+                <img src="/images/favorite-icon.png" alt="Favorites">
+                <span class="badge bg-success"
+                      sec:authorize="isAuthenticated()"
+                      th:text="${baseUserInfoDTO.favoriteProductsCount}">0</span>
+                <span class="badge bg-success"
+                      sec:authorize="!isAuthenticated()">0</span>
+            </a>
+
+            <a th:href="@{/user/cart}" class="nav-item cart-link">
+                <img src="/images/cart-icon.png" alt="Cart">
+                <span class="badge bg-success"
+                sec:authorize="isAuthenticated()"
+                      th:text="${baseUserInfoDTO.cartProductsCount}">0</span>
+                <span class="badge bg-success"
+                      sec:authorize="!isAuthenticated()">0</span>
+            </a>
+        </nav>
+    </div>
+</header>
+
+<!-- Sub-header -->
+
+<header class="sub-header" th:fragment="sub-header">
+    <div class="sub-header-left">
+        <a href="/consultation" class="chat-link">
+            <div class="chat-icon">
+                <i class="bi bi-chat-right-dots"></i>
+            </div>
+            <span>Онлайн консултация с фармацевт</span>
+        </a>
+    </div>
+    <div class="sub-header-center">
+        <img src="/images/company-text-logo.png" alt="Sub Logo">
+    </div>
+    <div class="sub-header-right">
+        <a href="/pharmacies" class="location-link">
+            <div class="truck-icon">
+                <i class="bi bi-truck"></i>
+            </div>
+            <span>Безплатна доставка над <span class="price">49.99лв.</span></span>
+        </a>
+    </div>
+</header>
+
+<!-- Categories Header -->
+
+<nav class="category-header" th:fragment="category-header">
+    <ul class="category-menu">
+        <li class="category-item">
+            <a href="#" class="category-link">Category 1</a>
+            <ul class="subcategory-menu">
+                <li><a href="/category1/sub1">Subcategory 1</a></li>
+                <li><a href="/category1/sub2">Subcategory 2</a></li>
+                <li><a href="/category1/sub3">Subcategory 3</a></li>
+            </ul>
+        </li>
+        <li class="category-item">
+            <a href="#" class="category-link">Category 2</a>
+            <ul class="subcategory-menu">
+                <li><a href="/category2/sub1">Subcategory 1</a></li>
+                <li><a href="/category2/sub2">Subcategory 2</a></li>
+            </ul>
+        </li>
+        <li class="category-item">
+            <a href="#" class="category-link">Category 3</a>
+            <ul class="subcategory-menu">
+                <li><a href="/category3/sub1">Subcategory 1</a></li>
+                <li><a href="/category3/sub2">Subcategory 2</a></li>
+            </ul>
+        </li>
+        <li class="category-item">
+            <a href="#" class="category-link">Category 1</a>
+            <ul class="subcategory-menu">
+                <li><a href="/category1/sub1">Subcategory 1</a></li>
+                <li><a href="/category1/sub2">Subcategory 2</a></li>
+                <li><a href="/category1/sub3">Subcategory 3</a></li>
+            </ul>
+        </li>
+        <li class="category-item">
+            <a href="#" class="category-link">Category 1</a>
+            <ul class="subcategory-menu">
+                <li><a href="/category1/sub1">Subcategory 1</a></li>
+                <li><a href="/category1/sub2">Subcategory 2</a></li>
+                <li><a href="/category1/sub3">Subcategory 3</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>

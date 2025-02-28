@@ -107,16 +107,16 @@
             </div>
             <hr class="divider">
             <div th:each="cartItem : *{userCartDTO.productsDTO}" class="cart-item"
-                 th:data-id="${cartItem.id}"
-                 th:data-name="${cartItem.title}"
+                 th:data-id="${cartItem.productId}"
+                 th:data-name="${cartItem.name}"
                  th:data-price="${cartItem.promotion != null ? #numbers.formatDecimal(cartItem.price * (1 - cartItem.promotion.discountPercentage / 100),1,2) : cartItem.price}"
-                 th:data-image="${cartItem.image.locatedOn}">
+                 th:data-image="${cartItem.image}">
 
-                <a href="/product-details" class="product-card-link">
-                    <img th:src="@{${cartItem.image.locatedOn}}" alt="Product Image">
+                <a th:href="@{/product/details/{id}(id=${cartItem.productId})}" class="product-card-link">
+                    <img th:src="@{${cartItem.image}}" alt="Product Image">
 
                     <div class="item-details">
-                    <p th:text="${cartItem.title}" class="item-name">Продукт</p>
+                    <p th:text="${cartItem.name}" class="item-name">Продукт</p>
                 </div>
                 </a>
 
@@ -144,7 +144,7 @@
                                                         : cartItem.price}) + ' лв.'">
                     Обща цена лв.</p>
 
-                <form th:action="@{/user/cart/product-remove/{id}(id=${cartItem.id})}" method="POST">
+                <form th:action="@{/user/cart/product-remove/{id}(id=${cartItem.productId})}" method="POST">
                     <input type="hidden" name="_method" value="DELETE"/>
                 <button type="submit" class="remove-item-btn bi-trash3"></button>
                 </form>
@@ -198,7 +198,7 @@
                 </div>
                 <p class="vat-note">*Всички цени са с включено ДДС</p>
             </div>
-            <form id="checkout-form" th:action="@{/user/cart-checkout}" method="POST">
+            <form id="checkout-form" th:action="@{/user/cart}" method="POST">
                 <input type="hidden" name="cartData" id="cart-data">
             <button class="checkout-btn" id="checkout-btn" type="button">Към завършване</button>
             </form>
