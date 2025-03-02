@@ -1,0 +1,253 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F4F3FA;
+}
+
+/* Main Header */
+.header {
+    background-color: #F0FFF9;
+    border-bottom: 1px solid #ddd;
+    padding: 3px 0;
+    color: #6a0dad;
+    font-size: 18px;
+    width: 100%;
+
+}
+
+
+.header img {
+    height: 50px;
+}
+
+
+/* Additional Header */
+.secondary-header {
+    /*background-color: #f8f9fa;*/
+    background-color: rgba(255, 255, 255, 0.0);
+    padding: 10px 0;
+    /*border-bottom: 1px solid #ccc;*/
+    border: none;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.secondary-header.hidden {
+    transform: translateY(-100%);
+}
+
+.secondary-header img {
+    max-width: 180px;
+}
+
+.arrow-back {
+    font-size: 20px;
+    color: #6a0dad;
+    text-decoration: none;
+}
+
+.arrow-back:hover {
+    text-decoration: underline;
+}
+
+.secure i {
+    margin-right: 5px;
+}
+
+/* Login Form */
+
+.return-to-login {
+    color: #6a1b9a;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.return-to-login:hover {
+    text-decoration: underline;
+}
+
+
+
+.login-container {
+    margin-top: -80px;
+    padding: 50px 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.login-form {
+    display: flex;
+    width: 80%;
+    max-width: 800px;
+    background-color: #F0FFF9;
+    padding: 20px;
+
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-form .left-side,
+.login-form .right-side {
+    flex: 1;
+    padding: 20px;
+}
+.login-form .left-side {
+    border-right: 1px solid #ddd;
+    letter-spacing: 0.5px;
+}
+.login-form .right-side {
+    padding-left: 30px;
+    letter-spacing: 0.8px;
+
+}
+
+.login-form .left-side h3,
+.login-form .right-side h3 {
+    color: purple;
+}
+.login-form .right-side input {
+    border-radius: 20px;
+    padding: 10px;
+    border: 1px solid #d86eff;
+    margin-bottom: 20px;
+    width: 100%;
+}
+.login-form .right-side input:focus {
+    outline: none;
+    border-color: purple;
+}
+
+
+
+.form-control::placeholder{
+    font-size: 13px; /* Размер на текста */
+    font-weight: normal; /* Дебелина на текста */
+    color: #888;
+    letter-spacing: 0.8px;
+    /*font-style: italic;*/
+}
+
+h2 {
+    color: #6a0dad;
+}
+
+ul {
+    list-style: none;
+    margin-top: 20px;
+}
+
+li {
+    margin: 10px 0;
+}
+
+li .tick {
+    color: #6a0dad;
+    font-weight: bold;
+}
+
+.btn-purple {
+    background-color: #6a0dad;
+    color: white;
+    border-radius: 50px;
+    padding: 10px;
+}
+
+.btn-purple:hover {
+    background-color: mediumpurple;
+    color: white;
+}
+
+.forgot-password {
+    display: block;
+    margin-top: 10px;
+    color: #6a0dad;
+    text-align: center;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.footer-wrapper{
+    background-color: transparent!important;
+}
+
+footer {
+    /*background-color: white;*/
+    text-align: center;
+    padding: 10px;
+    font-size: 0.8rem;
+    position: absolute;
+    bottom: 5%;
+    width: 100%;
+}
+
+input[type="email"]:focus, input[type="password"]:focus {
+    box-shadow: 0 0 5px rgba(106, 13, 173, 0.5);
+}
+input:-webkit-autofill {
+    background-color: white !important;
+    box-shadow: 0 0 15px 1000px white inset !important;
+    color: black !important;
+}
+
+input:-webkit-autofill:focus{
+    background-color: white !important;
+    box-shadow:0 0 5px rgba(106, 13, 173, 0.5), 0 0 15px 1000px white inset !important;
+    color: black !important;
+}
+
+.password-container.w-50{
+    width: 100%!important;
+}
+
+
+#floating-logos-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.floating-logo {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    pointer-events: auto;
+    animation: float 15s infinite linear;
+}
+
+@keyframes float {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(-100%) rotate(360deg);
+    }
+}
+
+@media (max-width: 767px) {
+    .login-container {
+        padding: 20px;
+    }
+}
