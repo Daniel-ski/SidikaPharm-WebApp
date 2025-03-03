@@ -1,6 +1,7 @@
 package bg.project.SidikaFarm.model.entity;
 
 import bg.project.SidikaFarm.model.entity.enums.DeliveryType;
+import bg.project.SidikaFarm.model.entity.enums.PaymentMethod;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,6 +21,10 @@ public class DeliveryDetails extends BaseEntity {
     private String note;
     @Enumerated(EnumType.STRING)
     private DeliveryType deliveryType;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
+    private String officeAddress;
 
     public DeliveryDetails() {
     }
@@ -111,6 +116,24 @@ public class DeliveryDetails extends BaseEntity {
 
     public DeliveryDetails setDeliveryType(DeliveryType deliveryType) {
         this.deliveryType = deliveryType;
+        return this;
+    }
+
+    public String getOfficeAddress() {
+        return officeAddress;
+    }
+
+    public DeliveryDetails setOfficeAddress(String officeAddress) {
+        this.officeAddress = officeAddress;
+        return this;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public DeliveryDetails setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
         return this;
     }
 }

@@ -18,7 +18,7 @@ public class Cart extends BaseEntity{
 
     private BigDecimal totalPrice;
     @ManyToMany
-    private Set<Product> products;
+    private Set<BaseProductInfo> products;
 
     public Cart() {
         this.products = new HashSet<>();
@@ -40,11 +40,14 @@ public class Cart extends BaseEntity{
         this.totalPrice = totalPrice;
     }
 
-    public Set<Product> getProducts() {
+    public Set<BaseProductInfo> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(Set<BaseProductInfo> products) {
         this.products = products;
+    }
+    public void setProduct(BaseProductInfo product){
+        this.products.add(product);
     }
 }

@@ -38,6 +38,9 @@ public class User extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
+    @ManyToOne
+    private DeliveryDetails deliveryDetails;
+
     public User() {
 
     }
@@ -87,6 +90,7 @@ public class User extends BaseEntity {
         private Set<Product> favoriteProducts;
         private Set<Article> articles;
         private Set<Role> roles;
+        private DeliveryDetails deliveryDetails;
 
         public UserBuilder setFirstName(String firstName) {
             this.firstName = firstName;
@@ -130,6 +134,11 @@ public class User extends BaseEntity {
 
         public UserBuilder setArticles(Set<Article> articles) {
             this.articles = articles;
+            return this;
+        }
+
+        public UserBuilder setDeliveryDetails(DeliveryDetails deliveryDetails){
+            this.deliveryDetails = deliveryDetails;
             return this;
         }
 
@@ -222,5 +231,17 @@ public class User extends BaseEntity {
 
     public void setFavoriteProducts(Set<Product> favoriteProducts) {
         this.favoriteProducts = favoriteProducts;
+    }
+    public void setFavoriteProduct(Product favoriteProduct){
+        this.favoriteProducts.add(favoriteProduct);
+    }
+
+    public DeliveryDetails getDeliveryDetails() {
+        return deliveryDetails;
+    }
+
+    public User setDeliveryDetails(DeliveryDetails deliveryDetails) {
+        this.deliveryDetails = deliveryDetails;
+        return this;
     }
 }

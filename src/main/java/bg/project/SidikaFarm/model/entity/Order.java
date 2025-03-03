@@ -22,8 +22,9 @@ public class Order extends BaseEntity{
 
 @ManyToOne(optional = false)
 private User owner;
-@ManyToMany()
-private Set<Product> products;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "order_id")  // Това ще добави `order_id` в `product_base_info`
+private Set<BaseProductInfo> products;
     @ManyToOne(optional = false)
 private DeliveryDetails deliveryDetails;
 
@@ -58,11 +59,11 @@ private DeliveryDetails deliveryDetails;
         return this;
     }
 
-    public Set<Product> getProducts() {
+    public Set<BaseProductInfo> getProducts() {
         return products;
     }
 
-    public Order setProducts(Set<Product> products) {
+    public Order setProducts(Set<BaseProductInfo> products) {
         this.products = products;
         return this;
     }
@@ -84,4 +85,5 @@ private DeliveryDetails deliveryDetails;
         this.totalPrice = totalPrice;
         return this;
     }
+
 }

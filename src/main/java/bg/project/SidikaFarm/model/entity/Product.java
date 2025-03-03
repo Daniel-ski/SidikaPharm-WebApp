@@ -109,4 +109,22 @@ public class Product extends BaseEntity {
     public void setAvailability(int availability) {
         this.availability = availability;
     }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public Product setImage(Image image) {
+        this.image = image;
+        return this;
+    }
+
+    public Promotion getPromotion() {
+        return promotion;
+    }
+
+    public Product setPromotion(Promotion promotion) {
+        this.promotion = promotion;
+        return this;
+    }
 }
