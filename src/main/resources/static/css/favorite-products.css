@@ -1,0 +1,85 @@
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body{
+    background-color: #F8EFFF;
+}
+
+.container {
+    flex: 1;
+}
+
+.favorite-product {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #F0FFF9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.text-center{
+    color: #6a1b9a;
+    border-radius: 15px;
+    padding: 5px 15px;
+    background-color: #E5FFDA;
+    display: inline-block;
+    margin-left: 37%;
+
+}
+
+.favorite-product img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.product-info {
+    flex-grow: 1;
+    margin-left: 15px;
+}
+
+.product-info h5 {
+    color: #6a1b9a;
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.product-info p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: darkgreen;
+    font-weight: normal;
+}
+
+.product-actions button {
+    margin-top: 5px;
+}
+.add-button{
+    background-color: darkgreen;
+    border-color: darkgreen;
+}
+.add-button:hover{
+    background-color: #28a745;
+}
+.delete-button{
+    background-color: red;
+}
+
+.product-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.product-card .buttons button {
+    pointer-events: auto;
+}
