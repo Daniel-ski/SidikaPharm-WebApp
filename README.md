@@ -3,11 +3,16 @@
 
 ## Tech Stack:
 - Java
+- MySQL
+- Spring Boot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Spring DataJPA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Spring Security
+
+
 - JavaScript
 - Thymeleaf
 - HTML
 - CSS
-- Gradle
+- Bootstrap
+
   
 *Всички останали зависимости и библиотеки могат да се видят в `build.gradle.kts` файла.*
 
@@ -26,3 +31,4 @@
 
   ## Начална страница
   Това е началната страница, която всеки потребител, включително нерегистриран, може да достъпи.
+![Homepage](images/readme/homepage.png)
