@@ -1,30 +1,47 @@
 package bg.project.SidikaFarm.service.impl;
 
+import bg.project.SidikaFarm.mapper.OrderMapper;
+import bg.project.SidikaFarm.model.entity.BaseProductInfo;
+import bg.project.SidikaFarm.model.entity.DeliveryDetails;
 import bg.project.SidikaFarm.model.entity.Order;
+import bg.project.SidikaFarm.model.entity.enums.OrderStatus;
 import bg.project.SidikaFarm.repository.OrderRepository;
+import bg.project.SidikaFarm.service.interfaces.DeliveryService;
 import bg.project.SidikaFarm.service.interfaces.OrderService;
+import bg.project.SidikaFarm.service.interfaces.ProductService;
 import bg.project.SidikaFarm.service.interfaces.UserService;
 import bg.project.SidikaFarm.web.dto.CartCheckoutProductDTO;
+import bg.project.SidikaFarm.web.dto.CreateOrderDTO;
 import bg.project.SidikaFarm.web.dto.OrderInfoDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Service
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final UserService userService;
+    private final ProductService productService;
+    private final DeliveryService deliveryService;
+    private final OrderMapper orderMapper;
+
     private final ModelMapper mapper;
 
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, UserService userService, ModelMapper mapper) {
+    public OrderServiceImpl(OrderRepository orderRepository, UserService userService, ProductService productService, DeliveryService deliveryService, OrderMapper orderMapper, ModelMapper mapper) {
         this.orderRepository = orderRepository;
         this.userService = userService;
+        this.productService = productService;
+        this.deliveryService = deliveryService;
+        this.orderMapper = orderMapper;
         this.mapper = mapper;
     }
 
@@ -34,6 +51,28 @@ public class OrderServiceImpl implements OrderService {
 
         return mapToOrderInfoDTO(orders);
 
+    }
+
+    @Override
+    public void createNewOrder(CreateOrderDTO createOrderDTO) {
+        Order order = new Order();
+
+        order.setOwner(this.userService.getCurrentUser());
+
+        Set<BaseProductInfo> productInfoSet = this.productService.mapToBaseProductInfoSet(createOrderDTO.getCartProductData());
+        order.setProducts(productInfoSet);
+
+        order
+                .setDeliveryDetails(
+                        this.deliveryService
+                        .mapDeliveryDetailsDTOToEntity(createOrderDTO.getDeliveryDetailsDTO(),new DeliveryDetails()));
+
+        order.setTotalPrice(calculateTotalPrice(createOrderDTO.getCartProductData()));
+        order.setCreatedOn(LocalDateTime.now());
+        order.setStatus(OrderStatus.IN_PROGRESS);
+
+
+        this.orderRepository.save(order);
     }
 
     private Set<OrderInfoDTO> mapToOrderInfoDTO(Set<Order> orders) {
@@ -71,5 +110,16 @@ public class OrderServiceImpl implements OrderService {
         });
 
         return baseProductsInfo;
+    }
+
+    private BigDecimal calculateTotalPrice(Map<Long, CartCheckoutProductDTO> cartProductData) {
+        BigDecimal totalPrice = new BigDecimal(0);
+
+        return cartProductData
+                .values()
+                .stream()
+                .map(dto -> dto.getPrice().multiply(BigDecimal.valueOf(dto.getQuantity())))
+                .reduce(BigDecimal.ZERO,BigDecimal::add);
+
     }
 }

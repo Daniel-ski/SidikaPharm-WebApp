@@ -126,15 +126,14 @@ public class UserProfileController {
     public String userProfileShippingUpdate(@ModelAttribute("userProfileDTO")
                                             @Valid UserProfileDTO userProfileDTO,
                                             BindingResult bindingResult,
-                                            RedirectAttributes redirectAttributes,
-                                            Authentication authentication){
+                                            RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("userProfileDTO",userProfileDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userProfileDTO",bindingResult);
 
             return "redirect:/user-profile/shipping";
         }
-        boolean isSuccessUpdate = userService.userProfileShippingUpdate(authentication.getName(), userProfileDTO);
+        boolean isSuccessUpdate = userService.userProfileShippingUpdate(userProfileDTO);
 
         if (!isSuccessUpdate){
             return "redirect:/user-profile/shipping";

@@ -1,6 +1,7 @@
 package bg.project.SidikaFarm.web.controller;
 
 import bg.project.SidikaFarm.service.interfaces.CartService;
+import bg.project.SidikaFarm.service.interfaces.OrderService;
 import bg.project.SidikaFarm.service.interfaces.UserService;
 import bg.project.SidikaFarm.web.dto.*;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -20,11 +21,13 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final OrderService orderService;
     private final CartService cartService;
 
     @Autowired
-    public UserController(UserService userService, CartService cartService) {
+    public UserController(UserService userService, OrderService orderService, CartService cartService) {
         this.userService = userService;
+        this.orderService = orderService;
         this.cartService = cartService;
     }
 
@@ -130,7 +133,6 @@ public class UserController {
     @PostMapping("user/cart-checkout")
     public String orderComplete(@ModelAttribute("createOrderDTO") CreateOrderDTO createOrderDTO,
                                 Model model,
-                                Authentication authentication,
                                 BindingResult bindingResult,
                                 RedirectAttributes redirectAttributes){
 
@@ -140,7 +142,7 @@ public class UserController {
             return "redirect:/user/cart-checkout";
         }
 
-        userService.createNewOrder(createOrderDTO,authentication.getName());
+        orderService.createNewOrder(createOrderDTO);
 
         return "redirect:/user/order/complete";
     }

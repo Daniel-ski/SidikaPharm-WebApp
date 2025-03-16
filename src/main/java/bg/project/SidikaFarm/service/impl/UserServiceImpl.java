@@ -1,12 +1,13 @@
 package bg.project.SidikaFarm.service.impl;
 
-import bg.project.SidikaFarm.model.entity.*;
-import bg.project.SidikaFarm.model.entity.enums.OrderStatus;
+import bg.project.SidikaFarm.mapper.UserMapper;
+import bg.project.SidikaFarm.model.entity.DeliveryDetails;
+import bg.project.SidikaFarm.model.entity.Product;
+import bg.project.SidikaFarm.model.entity.Role;
+import bg.project.SidikaFarm.model.entity.User;
 import bg.project.SidikaFarm.model.entity.enums.RoleType;
-import bg.project.SidikaFarm.repository.BaseProductInfoRepository;
-import bg.project.SidikaFarm.repository.DeliveryDetailsRepository;
-import bg.project.SidikaFarm.repository.OrderRepository;
 import bg.project.SidikaFarm.repository.UserRepository;
+import bg.project.SidikaFarm.service.interfaces.DeliveryService;
 import bg.project.SidikaFarm.service.interfaces.ProductService;
 import bg.project.SidikaFarm.service.interfaces.RoleService;
 import bg.project.SidikaFarm.service.interfaces.UserService;
@@ -18,59 +19,60 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
     private final RoleService roleService;
-    private final DeliveryDetailsRepository deliveryDetailsRepository;
-    private final OrderRepository orderRepository;
+    private final DeliveryService deliveryService;
     private final ProductService productService;
-    private final BaseProductInfoRepository baseProductInfoRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleService roleService, DeliveryDetailsRepository deliveryDetailsRepository, OrderRepository orderRepository, ProductService productService, BaseProductInfoRepository baseProductInfoRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleService roleService,
+                           DeliveryService deliveryService,
+                           ProductService productService,
+                           PasswordEncoder passwordEncoder) {
+
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
         this.roleService = roleService;
-        this.deliveryDetailsRepository = deliveryDetailsRepository;
-        this.orderRepository = orderRepository;
+        this.deliveryService = deliveryService;
         this.productService = productService;
-        this.baseProductInfoRepository = baseProductInfoRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void register(CreateRegisterDTO userRegisterDTO){
-
-        User user = User.mapFromDTO(userRegisterDTO,passwordEncoder);
+    public void register(CreateRegisterDTO createRegisterDTO) {
+        User user = this.userMapper.mapFromCreateRegisterDTO(createRegisterDTO);
+        user.setPassword(passwordEncoder.encode(createRegisterDTO.getPassword()));
 
         Role userRole = roleService.findByRoleType(RoleType.USER);
-
         user.getRoles().add(userRole);
 
-         userRepository.save(user);
+        userRepository.save(user);
 
     }
+
     @Override
-    public UserProfileDTO getUserProfile(String email){
-       User user = this.userRepository
-               .findByEmail(email)
-               .orElseThrow(()->new UsernameNotFoundException("User not found."));
+    public UserProfileDTO getUserProfile(String email) {
+        User user = this.userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
-       return mapToUserProfileDTO(user);
+        UserProfileDTO userProfileDTO = this.userMapper.mapToUserProfileDTO(user);
+
+        DeliveryDetailsDTO deliveryDetailsDTO = this.deliveryService.mapToDeliveryDetailsDTO(user.getDeliveryDetails());
+        userProfileDTO.setDeliveryDetails(deliveryDetailsDTO);
+
+        return userProfileDTO;
     }
-
 
 
     @Override
     public BaseUserInfoDTO getBaseUserInfo(String email) {
-       return this.userRepository
+        return this.userRepository
                 .getBaseUserInfo(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
@@ -79,110 +81,87 @@ public class UserServiceImpl implements UserService {
     public DeliveryDetailsDTO getUserDeliveryDetails(String email) {
         Optional<DeliveryDetails> deliveryDetailsOpt = this.userRepository.findDeliveryDetailsByUserEmail(email);
 
-        if (deliveryDetailsOpt.isPresent()){
+        if (deliveryDetailsOpt.isPresent()) {
             DeliveryDetails deliveryDetails = deliveryDetailsOpt.get();
-            DeliveryDetailsDTO deliveryDetailsDTO = new DeliveryDetailsDTO();
 
-                return deliveryDetailsDTO
-                        .setFirstName(deliveryDetails.getFirstName())
-                        .setLastName(deliveryDetails.getLastName())
-                        .setTown(deliveryDetails.getTown())
-                        .setPostCode(deliveryDetails.getPostCode())
-                        .setStreet(deliveryDetails.getStreet())
-                        .setNumber(deliveryDetails.getNumber())
-                        .setApartment(deliveryDetails.getApartment())
-                        .setFloor(deliveryDetails.getFloor())
-                        .setNote(deliveryDetails.getNote())
-                        .setDeliveryType(deliveryDetails.getDeliveryType())
-                        .setOfficeAddress(deliveryDetails.getOfficeAddress());
-
-
+            return this.deliveryService.mapToDeliveryDetailsDTO(deliveryDetails);
         }
         return null;
     }
 
     @Transactional
     @Override
-    public boolean userProfileShippingUpdate(String email, UserProfileDTO userProfileDTO) {
-        boolean present = this.userRepository.findDeliveryDetailsByUserEmail(email).isPresent();
-        DeliveryDetails deliveryDetails1 = this.userRepository.findDeliveryDetailsByUserEmail(email).orElseThrow(() -> new UsernameNotFoundException("not found"));
+    public boolean userProfileShippingUpdate(UserProfileDTO userProfileDTO) {
+
+        String currentUserEmail = this.getCurrentUserEmail();
+
+        Optional<DeliveryDetails> deliveryDetailsOpt = this.userRepository.findDeliveryDetailsByUserEmail(currentUserEmail);
         DeliveryDetailsDTO deliveryDetailsDTO = userProfileDTO.getDeliveryDetails();
-        DeliveryDetails deliveryDetails = new DeliveryDetails();
+
         boolean isSuccessUpdate = false;
 
-        if (deliveryDetailsDTO == null){
+        if (deliveryDetailsDTO == null) {
             return false;
         }
 
-        if (!present){
-            DeliveryDetails savedDeliveryDetails = deliveryDetailsRepository.saveAndFlush(deliveryDetails);
+        if (deliveryDetailsOpt.isEmpty()) {
+            DeliveryDetails savedDeliveryDetails = this.deliveryService.saveDeliveryDetails(new DeliveryDetails());
 
-            DeliveryDetails updatedDeliveryDetails = mapDeliveryDetailsDTOToEntity(deliveryDetailsDTO,savedDeliveryDetails);
+            DeliveryDetails updatedDeliveryDetails = this.deliveryService.mapDeliveryDetailsDTOToEntity(deliveryDetailsDTO, savedDeliveryDetails);
 
-            userRepository.updateDeliveryDetailsByEmail(email,updatedDeliveryDetails);
+            userRepository.updateDeliveryDetailsByEmail(currentUserEmail, updatedDeliveryDetails);
             isSuccessUpdate = true;
 
-        }else {
-            if (!checkBlankOrNull(deliveryDetailsDTO.getFirstName())){
-                deliveryDetails1.setFirstName(deliveryDetailsDTO.getFirstName());
+        } else {
+            DeliveryDetails deliveryDetails = deliveryDetailsOpt.get();
+
+            if (!checkBlankOrNull(deliveryDetailsDTO.getFirstName())) {
+                deliveryDetails.setFirstName(deliveryDetailsDTO.getFirstName());
                 isSuccessUpdate = true;
             }
-            if (!checkBlankOrNull(deliveryDetailsDTO.getLastName())){
-                deliveryDetails1.setLastName(deliveryDetailsDTO.getLastName());
+            if (!checkBlankOrNull(deliveryDetailsDTO.getLastName())) {
+                deliveryDetails.setLastName(deliveryDetailsDTO.getLastName());
                 isSuccessUpdate = true;
             }
-            if (!checkBlankOrNull(deliveryDetailsDTO.getTown())){
-                deliveryDetails1.setTown(deliveryDetailsDTO.getTown());
+            if (!checkBlankOrNull(deliveryDetailsDTO.getTown())) {
+                deliveryDetails.setTown(deliveryDetailsDTO.getTown());
                 isSuccessUpdate = true;
             }
-            if (!checkBlankOrNull(deliveryDetailsDTO.getPostCode())){
-                deliveryDetails1.setPostCode(deliveryDetailsDTO.getPostCode());
+            if (!checkBlankOrNull(deliveryDetailsDTO.getPostCode())) {
+                deliveryDetails.setPostCode(deliveryDetailsDTO.getPostCode());
                 isSuccessUpdate = true;
             }
-            if (!checkBlankOrNull(deliveryDetailsDTO.getStreet())){
-                deliveryDetails1.setStreet(deliveryDetailsDTO.getStreet());
+            if (!checkBlankOrNull(deliveryDetailsDTO.getStreet())) {
+                deliveryDetails.setStreet(deliveryDetailsDTO.getStreet());
                 isSuccessUpdate = true;
             }
-            if (!checkBlankOrNull(String.valueOf(deliveryDetailsDTO.getNumber()))){
-                deliveryDetails1.setNumber(deliveryDetailsDTO.getNumber());
+            if (!checkBlankOrNull(String.valueOf(deliveryDetailsDTO.getNumber()))) {
+                deliveryDetails.setNumber(deliveryDetailsDTO.getNumber());
                 isSuccessUpdate = true;
             }
-            if (!checkBlankOrNull(String.valueOf(deliveryDetailsDTO.getFloor()))){
-                deliveryDetails1.setFloor(deliveryDetailsDTO.getFloor());
+            if (!checkBlankOrNull(String.valueOf(deliveryDetailsDTO.getFloor()))) {
+                deliveryDetails.setFloor(deliveryDetailsDTO.getFloor());
                 isSuccessUpdate = true;
             }
-            if (!checkBlankOrNull(String.valueOf(deliveryDetailsDTO.getApartment()))){
-                deliveryDetails1.setApartment(deliveryDetailsDTO.getApartment());
+            if (!checkBlankOrNull(String.valueOf(deliveryDetailsDTO.getApartment()))) {
+                deliveryDetails.setApartment(deliveryDetailsDTO.getApartment());
                 isSuccessUpdate = true;
             }
-            if (!checkBlankOrNull(deliveryDetailsDTO.getNote())){
-                deliveryDetails1.setNote(deliveryDetailsDTO.getNote());
+            if (!checkBlankOrNull(deliveryDetailsDTO.getNote())) {
+                deliveryDetails.setNote(deliveryDetailsDTO.getNote());
                 isSuccessUpdate = true;
             }
-            userRepository.updateDeliveryDetailsByEmail(email,deliveryDetails1);
+            userRepository.updateDeliveryDetailsByEmail(currentUserEmail, deliveryDetails);
         }
         return isSuccessUpdate;
     }
 
-    @Override
-    public void createNewOrder(CreateOrderDTO createOrderDTO, String email) {
-        Order orderToSafe = mapToOrder(createOrderDTO, email);
-
-
-
-        this.orderRepository.save(orderToSafe);
-
-//        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Not found."));
-
-    }
 
     @Override
     public UserProfileManagementDTO getUserProfileManagementDTO(String email) {
 
-        UserProfileManagementDTO userProfileManagementDTO = this.userRepository
+        return this.userRepository
                 .getUserProfileManagementDTO(email).orElseThrow(() -> new UsernameNotFoundException("User not found!"));
-
-        return userProfileManagementDTO;
 
     }
 
@@ -195,7 +174,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getCurrentUserEmail(){
+    public String getCurrentUserEmail() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
@@ -210,51 +189,6 @@ public class UserServiceImpl implements UserService {
         this.userRepository.save(currentUser);
     }
 
-    private Order mapToOrder(CreateOrderDTO createOrderDTO, String email) {
-        Order order = new Order();
-        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        order
-                .setOwner(user)
-                .setCreatedOn(LocalDateTime.now())
-                .setStatus(OrderStatus.IN_PROGRESS)
-                .setProducts(mapToBaseProductInfo(createOrderDTO.getCartProductData()))
-                .setDeliveryDetails(mapDeliveryDetailsDTOToEntity(createOrderDTO.getDeliveryDetailsDTO(),new DeliveryDetails()))
-                .setTotalPrice(calculateTotalPrice(createOrderDTO.getCartProductData()));
-
-        return order;
-    }
-
-    private BigDecimal calculateTotalPrice(Map<Long, CartCheckoutProductDTO> cartProductData) {
-        BigDecimal totalPrice = new BigDecimal(0);
-
-        return cartProductData
-             .values()
-             .stream()
-             .map(dto -> dto.getPrice().multiply(BigDecimal.valueOf(dto.getQuantity())))
-             .reduce(BigDecimal.ZERO,BigDecimal::add);
-
-    }
-
-    private Set<BaseProductInfo> mapToBaseProductInfo(Map<Long, CartCheckoutProductDTO> cartProductData) {
-        Set<BaseProductInfo> productInfoSet = new HashSet<>();
-
-        cartProductData
-                .forEach((productId,dto) -> {
-
-
-                  productInfoSet.add(new BaseProductInfo()
-                            .setProductId(productId)
-                            .setName(dto.getName())
-                            .setPrice(dto.getPrice())
-                            .setQuantity(dto.getQuantity())
-                            .setImage(dto.getImage()));
-                });
-
-        this.baseProductInfoRepository.saveAll(productInfoSet);
-
-        return productInfoSet;
-    }
 
     @Override
     public void profileManagementUpdate(String email, UserProfileManagementDTO userProfileManagementDTO) {
@@ -266,13 +200,13 @@ public class UserServiceImpl implements UserService {
         String lastNameDTO = userProfileManagementDTO.getLastName();
         String emailDTO = userProfileManagementDTO.getEmail();
 
-        if (!checkBlankOrNull(firstNameDTO)){
+        if (!checkBlankOrNull(firstNameDTO)) {
             userToUpdate.setFirstName(firstNameDTO);
         }
-        if (!checkBlankOrNull(lastNameDTO)){
+        if (!checkBlankOrNull(lastNameDTO)) {
             userToUpdate.setLastName(lastNameDTO);
         }
-        if (!checkBlankOrNull(emailDTO)){
+        if (!checkBlankOrNull(emailDTO)) {
             userToUpdate.setEmail(emailDTO);
         }
         this.userRepository.save(userToUpdate);
@@ -284,9 +218,9 @@ public class UserServiceImpl implements UserService {
                 .findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
-        boolean oldPasswordVerify = passwordEncoder.matches(userProfilePasswordUpdateDTO.getOldPassword(),user.getPassword());
+        boolean oldPasswordVerify = passwordEncoder.matches(userProfilePasswordUpdateDTO.getOldPassword(), user.getPassword());
 
-        if (oldPasswordVerify){
+        if (oldPasswordVerify) {
             if (userProfilePasswordUpdateDTO.getNewPassword().equals(userProfilePasswordUpdateDTO.getConfirmPassword())) {
                 user.setPassword(passwordEncoder.encode(userProfilePasswordUpdateDTO.getNewPassword()));
 
@@ -298,68 +232,8 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    private DeliveryDetails mapDeliveryDetailsDTOToEntity(DeliveryDetailsDTO deliveryDetailsDTO,DeliveryDetails deliveryDetails) {
 
-        deliveryDetails
-                .setFirstName(deliveryDetailsDTO.getFirstName())
-                .setLastName(deliveryDetailsDTO.getLastName())
-                .setTown(deliveryDetailsDTO.getTown())
-                .setPostCode(deliveryDetailsDTO.getPostCode())
-                .setStreet(deliveryDetailsDTO.getStreet())
-                .setNumber(deliveryDetailsDTO.getNumber())
-                .setFloor(deliveryDetailsDTO.getFloor())
-                .setApartment(deliveryDetailsDTO.getApartment())
-                .setOfficeAddress(deliveryDetailsDTO.getOfficeAddress())
-                .setDeliveryType(deliveryDetailsDTO.getDeliveryType())
-                .setNote(deliveryDetailsDTO.getNote())
-                .setPaymentMethod(deliveryDetailsDTO.getPaymentMethod());
-
-        this.deliveryDetailsRepository.save(deliveryDetails);
-        
-        return deliveryDetails;
-
-    }
-
-    private UserProfileDTO mapToUserProfileDTO(User user) {
-        UserProfileDTO userProfileDTO = new UserProfileDTO();
-        DeliveryDetailsDTO userDeliveryDetails = this.mapToDeliveryDetailsDTO(user.getDeliveryDetails());
-
-        userProfileDTO
-                .setFirstName(user.getFirstName())
-                .setLastName(user.getLastName())
-                .setCity(user.getCity())
-                .setEmail(user.getEmail())
-                .setRegisteredOn(user.getRegisteredOn())
-                .setCart(user.getCart())
-                .setFavoriteProducts(user.getFavoriteProducts())
-                .setArticles(user.getArticles())
-                .setRoles(user.getRoles())
-                .setDeliveryDetails(userDeliveryDetails);
-        return userProfileDTO;
-    }
-
-    private DeliveryDetailsDTO mapToDeliveryDetailsDTO(DeliveryDetails deliveryDetails){
-        DeliveryDetailsDTO deliveryDetailsDTO = new DeliveryDetailsDTO();
-
-        deliveryDetailsDTO
-                .setFirstName(deliveryDetails.getFirstName())
-                .setLastName(deliveryDetails.getLastName())
-                .setTown(deliveryDetails.getTown())
-                .setPostCode(deliveryDetails.getPostCode())
-                .setStreet(deliveryDetails.getStreet())
-                .setNumber(deliveryDetails.getNumber())
-                .setFloor(deliveryDetails.getFloor())
-                .setApartment(deliveryDetails.getApartment())
-                .setOfficeAddress(deliveryDetails.getOfficeAddress())
-                .setDeliveryType(deliveryDetails.getDeliveryType())
-                .setNote(deliveryDetails.getNote())
-                .setPaymentMethod(deliveryDetails.getPaymentMethod());
-
-        return deliveryDetailsDTO;
-
-    }
-
-    private boolean checkBlankOrNull(String string){
+    private boolean checkBlankOrNull(String string) {
         return Optional
                 .ofNullable(string)
                 .map(String::isBlank)

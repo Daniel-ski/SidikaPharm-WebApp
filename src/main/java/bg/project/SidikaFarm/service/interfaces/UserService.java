@@ -15,9 +15,8 @@ public interface UserService {
 
     DeliveryDetailsDTO getUserDeliveryDetails(String email);
 
-    boolean userProfileShippingUpdate(String email, UserProfileDTO userProfileDTO);
+    boolean userProfileShippingUpdate(UserProfileDTO userProfileDTO);
 
-    void createNewOrder(CreateOrderDTO createOrderDTO, String email);
 
     UserProfileManagementDTO getUserProfileManagementDTO(String email);
 
